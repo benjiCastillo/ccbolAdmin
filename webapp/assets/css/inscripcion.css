@@ -1,0 +1,32 @@
+.data-pre-inscritos{
+    color: #039be5;
+}
+.dataCount{
+    font-size: 22px;
+    font-weight: bold;
+}
+.dataText{
+    font-size: 18px;
+}
+.btn-new-qr{
+    width: 40% !important;
+    min-width: 40% !important;
+}
+.visible-xs{
+    display: none!important;
+}
+.hidden-xs{
+    display:inline-block!important;
+}
+@media (max-width:767px){
+    .btn-new-qr{
+        width: 90% !important;
+        min-width: 90% !important;
+    }
+    .hidden-xs{
+        display:none!important;
+    }
+    .visible-xs{
+       display: inline-block!important;
+    }
+}
