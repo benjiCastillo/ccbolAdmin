@@ -218,6 +218,7 @@ class  UserModel
 			$res = $this->mysqli->store_result();
 			$res = $res->fetch_assoc();
 			mysqli_close($this->mysqli);
+			
 			return $res;					 
 	}
 	
