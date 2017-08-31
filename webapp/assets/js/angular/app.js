@@ -1,9 +1,10 @@
 var app = angular.module('ccbolApp',
 	['ngRoute',
     'jcs-autoValidate',
-	'ccbolApp.homeCtrl',
+    'ccbolApp.homeCtrl',
+    'ccbolApp.registroCtrl',
     'ccbolApp.preinscripcionCtrl',
-    'ccbolApp.preincripcionServices'
+    'ccbolApp.registroServices'
     ]
 	).run([
         'defaultErrorMessageResolver',
@@ -57,8 +58,11 @@ app.controller('mainCtrl', ['$scope','$http', function($scope,$http){
 	.when('/ccbol', {
 		templateUrl: 'assets/js/angular/pages/home.html',
         controller: 'homeCtrl'
-	})
-
+    })
+    .when('/registro', {
+		templateUrl: 'assets/js/angular/pages/registro.html',
+        controller: 'registroCtrl'
+    })
 	.when('/pre-inscripcion', {
 		templateUrl: 'assets/js/angular/pages/preinscripcion.html',
         controller: 'preinscripcionCtrl'

@@ -23,45 +23,7 @@ class  UserModel
 		$this->security = new Security();
 	}
 
-	//var $l => 'limit', $p => 'pagina'
 
-	//lista_total
-	public function listar(){
-
-		return $data = $this->db->from($this->table)
-						 ->orderBy('id DESC')
-						 ->fetchAll();
-	//  return $data = $this->mysqli->query('select * from '.$this->table)
-	//					 			->fetchAll();				   						 
-	}
-
-	//listar paginado
-	//parametros de limite, pagina
-	public function paginated($l, $p){	
-		$p = $p*$l;
-		$data = $this->db->from($this->table)
-						 ->limit($l)
-						 ->offset($p)
-						 ->orderBy('id desc')
-						 ->fetchAll();
-
-		$total = $this->db->from($this->table)
-						  ->select('COUNT(*) Total')
-						  ->fetch()
-						  ->Total;
-
-		return [
-			'data'	=>   $data,
-			'total' =>   $total
-
-		];				  						 
-	}
-	//obtener
-	public function getExamen($id){
-
-		return $data = $this->db->from($this->table, $id)
-								->fetch();  						 
-	}
 	//registrar
 	public function insert($data){
 		// $data['password'] = md5($data['password']);
@@ -188,15 +150,22 @@ class  UserModel
 	}
 
 	public function listUserBc($data){
+		$data = $this->security->desencriptarID($data);
+
 		$this->mysqli->multi_query(" CALL listUserBc('".$data."')");
 
 		$res = $this->mysqli->store_result();
-			while ($fila = $res->fetch_assoc()) {
-				$arreglo[] = $fila;
-			}
-		$res = $arreglo;
+		$res = $res->fetch_array();
 		mysqli_close($this->mysqli);
-		$res = array("message"=>$res[0], "response"=>true);
+		if($res[0] == 'yes'){
+			$res = array("respuesta"=>$res[1],"error"=>"yes");
+		}else{
+			if($res[1] == 1){
+				$res = array("error"=>$res[0],"type"=>$res[1],"nombres"=>$res[2],"apellidos"=>$res[3],"ci"=>$res[4],"email"=>$res[5],"ciudad"=>$res[6],"universidad"=>$res[8] ,"carrera"=>$res[9] ,"response"=>true);
+			}else{
+				$res = array("error"=>$res[0],"type"=>$res[1],"nombres"=>$res[2],"apellidos"=>$res[3],"ci"=>$res[4],"email"=>$res[5],"ciudad"=>$res[6],"profesion"=>$res[8] ,"response"=>true);
+			}
+		}
 		return $res;		 
 }
 

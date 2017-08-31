@@ -1,6 +1,6 @@
 var app = angular.module('ccbolApp.homeCtrl',[]);
 
-app.controller('homeCtrl', ['$scope','preincripcionServices',function($scope,preincripcionServices){
+app.controller('homeCtrl', ['$scope','$location','registroServices',function($scope,$location,registroServices){
     //animations
     setTimeout(function(){
         $('.img-port-slide').addClass('animated visible flipInX');
@@ -20,12 +20,16 @@ app.controller('homeCtrl', ['$scope','preincripcionServices',function($scope,pre
 
 
     $scope.guardar = function(data,frmUser) {
-        preincripcionServices.guardarEst( data ).then(function(){
-        $scope.dataResponse = preincripcionServices.response;
-        console.log($scope.dataResponse);
+        $scope.loader = true;
+        registroServices.guardarEst( data ).then(function(){
+        $scope.loader = false;
+        $scope.dataResponse = registroServices.response;
+        // console.log($scope.dataResponse);
+            if($scope.dataResponse.error == 'not'){
+                $location.path('/registro-exitoso');
+                frmUser.autoValidateFormOptions.resetForm();
+            }
         });
-
-            console.log(data)
         
     };
     

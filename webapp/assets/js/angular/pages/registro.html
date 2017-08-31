@@ -1,0 +1,170 @@
+<section class="container"> 
+    <div class="row">
+        <h1>Registro</h1>
+        
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Codigo </label>
+            <input type="text" ng-model="barcode" class="form-control" autofocus  ng-keydown="sendDataUser()" name="myInput"  required>
+             <h1>{{ barcode }}</h1>
+          </div>
+           <br><br>
+           <span ng-show="loader">Buscando..</span>
+        </div>
+        <div class="col-md-8">
+            <section ng-show="loader">
+                    <p>Cargando ...</p>
+            </section>
+            <section ng-show="dataError">
+                <p>No se Encontro el Registro</p>
+            </section>   
+            <section ng-show="viewStudent">
+                <h3>Datos Personales</h3>
+                <p> <b>Nombre:</b> {{ dataUser.nombres }}</p>
+                <p> <b>Apellidos:</b> {{ dataUser.apellidos }}</p>
+                <p> <b>Ci:</b> {{ dataUser.ci }}</p>
+                <p> <b>Ciudad:</b> {{ dataUser.ciudad }}</p>
+                <p> <b>Universidad:</b> {{ dataUser.universidad }}</p>
+                <p> <b>Carrera:</b> {{ dataUser.carrera }}</p>
+                <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditStudent(dataUser)"> Editar Datos</button>
+                
+            </section>   
+            <section ng-show="viewProfesional">
+                <h3>Datos Personales</h3>
+                 <p> <b>Nombre:</b> {{ dataUser.nombres }}</p>
+                <p> <b>Apellidos:</b> {{ dataUser.apellidos }}</p>
+                <p> <b>Ci:</b> {{ dataUser.ci }}</p>
+                <p> <b>Ciudad:</b> {{ dataUser.ciudad }}</p>
+                <p> <b>Profesion:</b> {{ dataUser.profesion }}</p>
+                <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditProfesional(dataUser)"> Editar Datos</button>
+            </section>    
+
+        </div>
+    </div>
+</section>
+
+<div id="modalStudent" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-close-modal" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title name-hotel-modal">Datos Generales</h4>
+      </div>
+      <div class="modal-body">
+        <form name="frmStudent" ng-submit="editStudent(studentEdit)">
+            <div class="form-group">
+            <label>Nombres </label>
+                <input type="text" class="form-control" placeholder="Nombres"
+                    ng-model="studentEdit.nombres" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Apellidos </label>
+                <input type="text" class="form-control" placeholder="Apellidos"
+                    ng-model="studentEdit.apellidos" required>
+            </div>
+            
+            <div class="form-group">
+                <label>CI</label>
+                <input type="text" class="form-control" placeholder="CI"
+                    ng-model="studentEdit.ci" ng-maxlength="13" required>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-sm-8">
+                    <label>Ciudad </label>
+                    <input type="text" name="city" id="city" ng-model="studentEdit.ciudad" ng-keyup="completeCity(studentEdit.ciudad)" class="form-control" placeholder="Ciudad" autocomplete="off" required />
+                    <ul class="list-group margin-top-0" ng-model="hidethis" ng-hide="hidethis">
+                        <li class="list-group-item select2" ng-repeat="citydata in filterCity" ng-click="fillTextboxCity(citydata)">{{citydata}}</li>
+                    </ul>
+                </div>
+            </div>  
+            
+            <div class="form-group row animated flipInX">
+              <div class="col-sm-8">
+                    <label>Universidad </label>
+                    <input type="text" name="college" id="college" ng-model="studentEdit.universidad" ng-keyup="completeCollege(studentEdit.universidad)" class="form-control" placeholder="Universidad"/>
+                    <ul class="list-group margin-top-0" ng-model="hidethisCollege" ng-hide="hidethisCollege">
+                        <li class="list-group-item select2" ng-repeat="collegeData in filterCollege" ng-click="fillTextboxCollege(collegeData)">{{collegeData}}</li>
+                    </ul>
+              </div>
+            </div>
+
+            <div class="form-group row animated flipInX">
+              <div class="col-sm-8">
+                    <label>Carrera </label>
+                    <input type="text" name="carrera" id="carrera" ng-model="studentEdit.carrera" ng-keyup="completeCareer(studentEdit.carrera)" class="form-control" placeholder="Carrera"/>
+                    <ul class="list-group margin-top-0" ng-model="hidethisCareer" ng-hide="hidethisCareer">
+                        <li class="list-group-item select2" ng-repeat="careerData in filterCareer" ng-click="fillTextboxCareer(careerData)">{{careerData}}</li>
+                    </ul>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
+            {{ resEditStudent }}
+
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div id="modalProfesional" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-close-modal" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title name-hotel-modal">Datos Generales</h4>
+      </div>
+      <div class="modal-body">
+        <form name="frmProfesional" ng-submit="editProfesional(profesionalEdit)">
+            <div class="form-group">
+            <label>Nombres </label>
+                <input type="text" class="form-control" placeholder="Nombres"
+                    ng-model="profesionalEdit.nombres" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Apellidos </label>
+                <input type="text" class="form-control" placeholder="Apellidos"
+                    ng-model="profesionalEdit.apellidos" required>
+            </div>
+            
+            <div class="form-group">
+                <label>CI</label>
+                <input type="text" class="form-control" placeholder="CI"
+                    ng-model="profesionalEdit.ci" ng-maxlength="13" required>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-sm-8">
+                    <label>Ciudad </label>
+                    <input type="text" name="city" id="city" ng-model="profesionalEdit.ciudad" ng-keyup="completeCity2(profesionalEdit.ciudad)" class="form-control" placeholder="Ciudad" autocomplete="off" required />
+                    <ul class="list-group margin-top-0" ng-model="hidethis" ng-hide="hidethis">
+                        <li class="list-group-item select2" ng-repeat="citydata in filterCity" ng-click="fillTextboxCity2(citydata)">{{citydata}}</li>
+                    </ul>
+                </div>
+            </div>  
+            
+            <div class="form-group animated flipInX">
+              <label>Profesión </label>
+              <input type="text" class="form-control" placeholder="Profesión"
+                  ng-model="profesionalEdit.profesion">
+            </div>
+
+            <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
+            {{ resEditProfesional }}
+
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>

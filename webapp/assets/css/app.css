@@ -513,3 +513,23 @@ nav{
     min-height: 100vh;
 }
 
+.btn-update{
+    background: #039be5;;
+    color:white;
+}
+.btn-update:hover, .btn-update:active, .btn-update:focus{
+    background: #00518d;
+}
+.btn-close-modal{
+    position: absolute;
+    right: 14px;
+    /* margin-left: 10px; */
+    background: white;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    padding-left: 6px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    font-size: 20px;
+
+}
