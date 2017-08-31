@@ -212,13 +212,12 @@ class  UserModel
 														'".$data['_ci']."',
 														'".$data['_email']."',
 														'".$data['_city']."',
-														'".$data['_paid']."',
 														'".$data['_career']."',
 														'".$data['_college']."')");
 			$res = $this->mysqli->store_result();
 			$res = $res->fetch_assoc();
 			mysqli_close($this->mysqli);
-			
+
 			return $res;					 
 	}
 	
