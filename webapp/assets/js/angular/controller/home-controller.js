@@ -32,5 +32,17 @@ app.controller('homeCtrl', ['$scope','$location','registroServices',function($sc
         });
         
     };
-    
+    /*LOGIN ADMIN*/
+    $scope.logInAdmin = function(data){
+        console.log(data)
+        registroServices.guardarEst( data ).then(function(){
+        $scope.loader = false;
+        $scope.dataResponse = registroServices.response;
+        // console.log($scope.dataResponse);
+            if($scope.dataResponse.error == 'not'){
+                $location.path('/registro-exitoso');
+                frmUser.autoValidateFormOptions.resetForm();
+            }
+        });
+    } 
 }]) 

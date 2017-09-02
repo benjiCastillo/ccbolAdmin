@@ -161,9 +161,9 @@ class  UserModel
 			$res = array("respuesta"=>$res[1],"error"=>"yes");
 		}else{
 			if($res[1] == 1){
-				$res = array("error"=>$res[0],"type"=>$res[1],"nombres"=>$res[2],"apellidos"=>$res[3],"ci"=>$res[4],"email"=>$res[5],"ciudad"=>$res[6],"universidad"=>$res[8] ,"carrera"=>$res[9] ,"response"=>true);
+				$res = array("error"=>$res[0],"type"=>$res[1],"_name"=>$res[2],"_last_name"=>$res[3],"_ci"=>$res[4],"_email"=>$res[5],"_city"=>$res[6],"_college"=>$res[8] ,"_career"=>$res[9],"_id"=>$res[10] ,"response"=>true);
 			}else{
-				$res = array("error"=>$res[0],"type"=>$res[1],"nombres"=>$res[2],"apellidos"=>$res[3],"ci"=>$res[4],"email"=>$res[5],"ciudad"=>$res[6],"profesion"=>$res[8] ,"response"=>true);
+				$res = array("error"=>$res[0],"type"=>$res[1],"_name"=>$res[2],"_last_name"=>$res[3],"_ci"=>$res[4],"_email"=>$res[5],"_city"=>$res[6],"_professional_degree"=>$res[8],"_id"=>$res[9] ,"response"=>true);
 			}
 		}
 		return $res;		 
