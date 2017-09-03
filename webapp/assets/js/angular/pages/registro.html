@@ -26,6 +26,7 @@
                 <p> <b>Ciudad:</b> {{ dataUser._city }}</p>
                 <p> <b>Universidad:</b> {{ dataUser._college }}</p>
                 <p> <b>Carrera:</b> {{ dataUser._career }}</p>
+                <h3> <b>Cargo:</b> <span style="background: turquoise;">{{ dataUser._cargo }}</span></h3>
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditStudent(dataUser)"> Editar Datos</button>
                 <button class="btn btn-transparent-gmail btn-paid" ng-click="paid(dataUser)"> Registrar Pago </button>
                 
@@ -37,6 +38,7 @@
                 <p> <b>Ci:</b> {{ dataUser._ci }}</p>
                 <p> <b>Ciudad:</b> {{ dataUser._city }}</p>
                 <p> <b>Profesion:</b> {{ dataUser._professional_degree }}</p>
+                <h3> <b>Cargo:</b> <span style="background: turquoise;">{{ dataUser._cargo }}</span> </h3>
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditProfesional(dataUser)"> Editar Datos</button>
                 <button class="btn btn-transparent-gmail btn-paid" ng-click="paid(dataUser)"> Registrar Pago </button>
             </section>    
@@ -103,7 +105,14 @@
                     </ul>
               </div>
             </div>
-
+            <div class="form-group">
+                <label>Cargo</label>
+                <input type="text" class="form-control" placeholder="Cargo"
+                    ng-model="studentEdit._cargo" ng-maxlength="13" required>
+            </div>
+            <select name="repeatSelect" id="repeatSelect" ng-model="data.model">
+                <option ng-repeat="option in data.availableOptions" value="{{ option.name }}" ng-selected="userMod.rol">{{option.name}}</option>
+            </select>  
             <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
             <br>
             <br>
@@ -163,6 +172,14 @@
               <input type="text" class="form-control" placeholder="Profesión"
                   ng-model="profesionalEdit._professional_degree ">
             </div>
+            <div class="form-group">
+                <label>Cargo</label>
+                <input type="text" class="form-control" placeholder="Cargo"
+                    ng-model="studentEdit._cargo" ng-maxlength="13" required>
+            </div>
+            <select name="repeatSelect" id="repeatSelect" ng-model="data.model">
+                <option ng-repeat="option in data.availableOptions" value="{{ option.name }}" ng-selected="userMod.rol">{{option.name}}</option>
+            </select>    
             <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
             <br><br>
             <span ng-show="loaderUpdatePro  ">Cargando...</span>    

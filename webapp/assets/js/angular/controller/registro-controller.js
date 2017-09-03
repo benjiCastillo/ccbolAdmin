@@ -134,6 +134,17 @@ $scope.getDataUser = function(){
 $scope.showModalEditStudent =  function(student){
     $scope.studentEdit;
     $scope.studentEdit = student;
+    $scope.userMod = student;
+    //select cargo
+    console.log($scope.userMod );
+    $scope.data = {
+        model: $scope.userMod._cargo,
+        availableOptions: [
+            {name: 'PARTICIPANTE'},
+            {name: 'ORGANIZADOR'},
+            {name: 'EXPOSITOR'}
+        ]
+    };
     $('#modalStudent').modal('show')
 }
 
@@ -155,6 +166,8 @@ $scope.editProfesional = function(){
 $scope.loaderUpdateStudent = false;
 
 $scope.editStudentData = function(data){
+
+
      $scope.loaderUpdateStudent = true;
         registroServices.updateUserData( data ).then(function(){
         $scope.loaderUpdateStudent = false;

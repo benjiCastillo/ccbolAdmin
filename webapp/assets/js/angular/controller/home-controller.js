@@ -1,6 +1,6 @@
-var app = angular.module('ccbolApp.homeCtrl',[]);
+var app = angular.module('ccbolApp.homeCtrl',['ngStorage']);
 
-app.controller('homeCtrl', ['$scope','$location','registroServices',function($scope,$location,registroServices){
+app.controller('homeCtrl', ['$scope','$location','registroServices','$sessionStorage',function($scope,$location,registroServices,$sessionStorage){
     //animations
     setTimeout(function(){
         $('.img-port-slide').addClass('animated visible flipInX');
@@ -17,7 +17,7 @@ app.controller('homeCtrl', ['$scope','$location','registroServices',function($sc
 
 
     $scope.loader = false;
-
+    $sessionStorage.data = {};
 
     $scope.guardar = function(data,frmUser) {
         $scope.loader = true;
@@ -34,14 +34,16 @@ app.controller('homeCtrl', ['$scope','$location','registroServices',function($sc
     };
     /*LOGIN ADMIN*/
     $scope.logInAdmin = function(data){
-        console.log(data)
+    
         registroServices.guardarEst( data ).then(function(){
         $scope.loader = false;
         $scope.dataResponse = registroServices.response;
+        console.log($scope.dataResponse);
         // console.log($scope.dataResponse);
             if($scope.dataResponse.error == 'not'){
-                $location.path('/registro-exitoso');
-                frmUser.autoValidateFormOptions.resetForm();
+                console.log($scope.dataResponse);
+                $sessionStorage.data.id = $scope.dataResponse.id;
+                $location.path('/registro');
             }
         });
     } 
