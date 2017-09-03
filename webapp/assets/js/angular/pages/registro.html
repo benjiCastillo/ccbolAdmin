@@ -105,14 +105,15 @@
                     </ul>
               </div>
             </div>
+
             <div class="form-group">
                 <label>Cargo</label>
-                <input type="text" class="form-control" placeholder="Cargo"
-                    ng-model="studentEdit._cargo" ng-maxlength="13" required>
-            </div>
-            <select name="repeatSelect" id="repeatSelect" ng-model="data.model">
-                <option ng-repeat="option in data.availableOptions" value="{{ option.name }}" ng-selected="userMod.rol">{{option.name}}</option>
-            </select>  
+                <select name="repeatSelect" class="form-control" id="repeatSelec" ng-model="data2.model">
+                    <option ng-repeat="option in data.availableOptions" value="{{ option.name }}" ng-selected="studentEdit._cargo">{{option.name}}</option>
+                </select>
+            </div>    
+            <br><br> 
+
             <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
             <br>
             <br>
@@ -172,14 +173,15 @@
               <input type="text" class="form-control" placeholder="Profesión"
                   ng-model="profesionalEdit._professional_degree ">
             </div>
+
             <div class="form-group">
                 <label>Cargo</label>
-                <input type="text" class="form-control" placeholder="Cargo"
-                    ng-model="studentEdit._cargo" ng-maxlength="13" required>
-            </div>
-            <select name="repeatSelect" id="repeatSelect" ng-model="data.model">
-                <option ng-repeat="option in data.availableOptions" value="{{ option.name }}" ng-selected="userMod.rol">{{option.name}}</option>
-            </select>    
+                <select name="repeatSelect2" class="form-control" id="repeatSelec2t" ng-model="data.model">
+                    <option ng-repeat="option in data.availableOptions" value="{{ option.name }}" ng-selected="profesionalEdit._cargo">{{option.name}}</option>
+                </select>
+            </div>    
+
+            <br><br>               
             <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
             <br><br>
             <span ng-show="loaderUpdatePro  ">Cargando...</span>    

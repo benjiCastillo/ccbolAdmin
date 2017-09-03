@@ -208,6 +208,7 @@ class  UserModel
 	
 	public function updateUser($data){
 		$this->mysqli->multi_query(" CALL updateUser('".$data['_id']."',
+														".$data['_id_admin']."',
 														'".$data['_name']."',
 														'".$data['_last_name']."',
 														'".$data['_ci']."',
