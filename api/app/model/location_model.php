@@ -82,73 +82,23 @@ class  LocationModel
 			return $res;	
 	}
 
-	public function listarExamenes(){
-		$this->mysqli->multi_query(" CALL listarExamenes()");
-			$res = $this->dmysqlib_pdo->store_result();
-			while($fila = $res->fetch_assoc()){
-				$arreglo[] = $fila;
-			}
-			$res = $arreglo;
-			mysqli_close($this->mysqli);
-			$res = array("message"=>$res,"response"=>true);
-			return $res;	
-	}
-
-	public function listarExamenesPac($data){
-
-			$this->mysqli->multi_query(" CALL listarExamenesPac(".$data.")");
+	public function listLodgings(){
+		$this->mysqli->multi_query(" CALL listLodgings()");
 			$res = $this->mysqli->store_result();
 			while($fila = $res->fetch_assoc()){
 				$arreglo[] = $fila;
 			}
 			$res = $arreglo;
 			mysqli_close($this->mysqli);
-			$res = array("message"=>$res,"response"=>true);
+			if($res[0]["error"] == "yes"){
+				$res = array("respuesta"=>$res[0]["respuesta"], "error"=>$res[0]["error"]);
+			}else{
+				$res = array("message"=>$res, "error"=>"not", "response"=>true);
+			}
 			return $res;
-			
+			// $res = array("message"=>$res, "response"=>true);
+			// return $res;		
 	}
-
-	public function insertarTipo($data){
-
-		//$this->db->insertInto($this->table, $data)
-		//		 ->execute();
-		$this->mysqli->multi_query(" CALL insertarTipo('".$data['_tipo']."',
-														'".$data['_id_examen']."',
-														'".$data['_id_tipo']."')");
-			$res = $this->mysqli->store_result();
-			$res = $res->fetch_array();
-			mysqli_close($this->mysqli);
-			$res = array("message"=>$res[0],"response"=>true);
-			return $res;	
-	}
-	//listar todos los examens
-	public function listAllTest(){
-
-		$this->mysqli->multi_query(" CALL listExa()");
-			$res = $this->mysqli->store_result();
-			while($fila = $res->fetch_assoc()){
-				$arreglo[] = $fila;
-			}
-			$res = $arreglo;
-			mysqli_close($this->mysqli);
-			$res = array("message"=>$res,"response"=>true);
-			return $res;	
-	}
-	//Listar tipo de examen por id de examen
-	public function listExamenPaciente($id){
-		$this->mysqli->multi_query(" CALL listarExamenPaciente('".$id."')");
-			$res = $this->mysqli->store_result();
-			while($fila = $res->fetch_assoc()){
-				$arreglo[] = $fila;
-			}
-			$res = $arreglo;
-			mysqli_close($this->mysqli);
-			$res = array("message"=>$res,"response"=>true);
-			return $res;
-			
-	}
-	
-
 
 	
 	//actualizar

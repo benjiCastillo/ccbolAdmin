@@ -55,12 +55,24 @@ class  ExpositorModel
 
 		];				  						 
 	}
-	//obtener
-	public function getExamen($id){
-
-		return $data = $this->db->from($this->table, $id)
-								->fetch();  						 
+	public function listExpositors(){
+		$this->mysqli->multi_query(" CALL listExpositors()");
+			$res = $this->mysqli->store_result();
+			while($fila = $res->fetch_assoc()){
+				$arreglo[] = $fila;
+			}
+			$res = $arreglo;
+			mysqli_close($this->mysqli);
+			if($res[0]["error"] == "yes"){
+				$res = array("respuesta"=>$res[0]["respuesta"], "error"=>$res[0]["error"]);
+			}else{
+				$res = array("message"=>$res, "error"=>"not", "response"=>true);
+			}
+			return $res;
+			// $res = array("message"=>$res, "response"=>true);
+			// return $res;		
 	}
+
 	//registrar
 	public function insert($data){
 		// $data['password'] = md5($data['password']);

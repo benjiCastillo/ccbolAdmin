@@ -70,8 +70,14 @@ class  EventModel
 			}
 			$res = $arreglo;
 			mysqli_close($this->mysqli);
-			$res = array("message"=>$res, "response"=>true);
-			return $res;	
+			if($res[0]["error"] == "yes"){
+				$res = array("respuesta"=>$res[0]["respuesta"], "error"=>$res[0]["error"]);
+			}else{
+				$res = array("message"=>$res, "error"=>"not", "response"=>true);
+			}
+			return $res;
+			// $res = array("message"=>$res, "response"=>true);
+			// return $res;		
 	}
 
 	

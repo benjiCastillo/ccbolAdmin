@@ -11,6 +11,13 @@ use App\Lib\Response;
 
 $app->group('/expositor',function(){
 
+	$this->get('/listExpositors/',function($req, $res, $args){
+		return $res->withHeader('Content-type', 'aplication/json')
+				   ->write(
+				   		json_encode($this->model->Expositor->listExpositors())
+				   	);
+	});
+
 	$this->post('/login',function($req, $res, $args){
 		return $res->withHeader('Content-type', 'aplication/json')
 				   ->write(
