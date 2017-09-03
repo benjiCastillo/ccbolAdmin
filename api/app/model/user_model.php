@@ -208,17 +208,18 @@ class  UserModel
 	
 	public function updateUser($data){
 		$this->mysqli->multi_query(" CALL updateUser('".$data['_id']."',
+                                                        '".$data['_id_admin']."',
 														'".$data['_name']."',
 														'".$data['_last_name']."',
 														'".$data['_ci']."',
 														'".$data['_email']."',
 														'".$data['_city']."',
+														'".$data['_cargo']."',
 														'".$data['_career']."',
 														'".$data['_college']."')");
 			$res = $this->mysqli->store_result();
 			$res = $res->fetch_assoc();
 			mysqli_close($this->mysqli);
-
 			return $res;					 
 	}
 	
