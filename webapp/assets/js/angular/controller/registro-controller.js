@@ -1,6 +1,6 @@
-var app = angular.module('ccbolApp.registroCtrl',[]);
+var app = angular.module('ccbolApp.registroCtrl',['ngStorage']);
 
-app.controller('registroCtrl', ['$scope','$location','registroServices',function($scope,$location,registroServices){
+app.controller('registroCtrl', ['$scope','$location','registroServices','$sessionStorage',function($scope,$location,registroServices,$sessionStorage){
 
 $scope.cityList = {nombre:["Santa Cruz de la Sierra","El Alto","La Paz","Cochabamba","Oruro","Sucre","Tarija","Potosí","Sacaba","Quillacollo","Montero","Trinidad","Riberalta","Warnes","La Guardia","Viacha","Yacuiba","Colcapirhua","Tiquipaya","Cobija","Vinto","Guayaramerín","Villazón","Villa Yapacaní","Villa Montes","Bermejo","Camiri","Tupiza","Llallagua","San Ignacio de Velasco","San Julián","Huanuni"]};
 $scope.collegeList = { nombre: ["(UMSS) Universidad Mayor de San Simón","(UMSA) Universidad Mayor de San Andrés","(UCB) Universidad Católica Boliviana","(USFX) Universidad Mayor de San Francisco Xavier","(UPSA) Universidad Privada de Santa Cruz de la Sierra","(UAGRM) Universidad Autónoma Gabriel René Moreno","(UPB) Universidad Privada Boliviana","(UNIVALLE) Universidad Privada del Valle","(UDABOL) Universidad de Aquino Bolivia","(UAJMS) Universidad Autónoma Juan Misael Saracho","Universidad Nur","(UASB) Universidad Andina Simón Bolivar","(UTO) Universidad Técnica de Oruro","(UPAL) Universidad Privada Abierta Latinoamericana",   "(UATF) Universidad Autónoma Tomás Frías","(USALESIANA) Universidad Salesiana de Bolivia","(UPDS) Universidad Privada Domingo Savio","(EMI) Escuela Militar de Ingeniería","(UTEPSA) Universidad Tecnológica Privada de Santa Cruz","(UAB) Universidad Adventista de Bolivia","Universidad Loyola","(UNIFRANZ) Universidad Privada Franz Tamayo","(UNSLP) Universidad Privada Nuestra Señora de La Paz","(UNICEN) Universidad Central","(UABJB) Universidad Autónoma del Beni José Ballivián","(UTB) Universidad Tecnológica Boliviana","(UNSXX) Universidad Nacional de Siglo XX","(UEB) Universidad Evangélica Boliviana","(UPEA) Universidad Pública de El Alto",    "(UECOLOGIA) Universidad Nacional Ecológica",   "(USFA) Universidad Privada San Francisco de Asís", "(UCEBOL) Universidad Cristiana de Bolivia",    "(UAP) Universidad Amazónica de Pando", "(UNITEPC) Universidad Técnica Privada Cosmos", "(UCORDILLERA) Universidad de la Cordillera","(ULS) Universidad La Salle",   "(UREAL) Universidad Real", "(UPIEB) Universidad para la Investigación Estratégica en Bolivia",  "(UDELOSANDES) Universidad de los Andes", "(UNO) Universidad Nacional del Oriente", "Universidad Privada Cumbre", "(UCATEC) Universidad Privada de Ciencias Administrativas y Tecnológicas","(USIP) Universidad Simón I. Patiño", "(UDI) Universidad para el Desarrollo y la Innovación",  "(UB) Universidad Unión Bolivariana", "(UNIOR) Universidad Privada de Oruro",  "(UNIBETH) Universidad Bethesda", "(ULAT) Universidad Latinoamericana",    "(UBI) Universidad Boliviana de Informática", "Universidad Unidad","(USP) Universidad Saint Paul"]};
@@ -130,21 +130,20 @@ $scope.getDataUser = function(){
     }
 
 }
-/*muestra el modal de edicon de datos de estudiante*/
+/*muestra el modal de edicion de datos de estudiante*/
 $scope.showModalEditStudent =  function(student){
     $scope.studentEdit;
     $scope.studentEdit = student;
-    $scope.userMod = student;
     //select cargo
-    console.log($scope.userMod );
-    $scope.data = {
-        model: $scope.userMod._cargo,
-        availableOptions: [
+        $scope.data2 = {
+            model: $scope.studentEdit._cargo,
+            availableOptions: [
             {name: 'PARTICIPANTE'},
             {name: 'ORGANIZADOR'},
             {name: 'EXPOSITOR'}
-        ]
-    };
+            ]
+        };
+
     $('#modalStudent').modal('show')
 }
 
@@ -154,9 +153,18 @@ $scope.editStudent = function(){
 
 /*muestra el modal de edicon de datos de p*/
 $scope.showModalEditProfesional =  function(profesional){
-    $scope.profesionalEdit;
     $scope.profesionalEdit = profesional;
-    $('#modalProfesional').modal('show')
+    $('#modalProfesional').modal('show');
+    //select cargo
+        $scope.data = {
+            model: $scope.profesionalEdit._cargo,
+            availableOptions: [
+            {name: 'PARTICIPANTE'},
+            {name: 'ORGANIZADOR'},
+            {name: 'EXPOSITOR'}
+            ]
+        };
+    $('#modalStudent').modal('show')
 }
 $scope.editProfesional = function(){
     console.log($scope.profesionalEdit)
@@ -167,32 +175,37 @@ $scope.loaderUpdateStudent = false;
 
 $scope.editStudentData = function(data){
 
-
      $scope.loaderUpdateStudent = true;
-        registroServices.updateUserData( data ).then(function(){
-        $scope.loaderUpdateStudent = false;
-        $scope.dataUpdateStudent = registroServices.response;
-        console.log($scope.dataUpdateStudent);
-            setTimeout(function() {
-                $('#modalStudent').modal('hide');
-                $scope.dataUpdateStudent.respuesta = ''
-            }, 1000);
-        });
+     data._id_admin = $sessionStorage.data.id;
+     data._cargo = $scope.data2.model;
+     console.log(data);
+        // registroServices.updateUserData( data ).then(function(){
+        // $scope.loaderUpdateStudent = false;
+        // $scope.dataUpdateStudent = registroServices.response;
+        // console.log($scope.dataUpdateStudent);
+        //     setTimeout(function() {
+        //         $('#modalStudent').modal('hide');
+        //         $scope.dataUpdateStudent.respuesta = ''
+        //     }, 1000);
+        // });
 }
 $scope.loaderUpdatePro = false;
 $scope.editProfesionalData = function(data){
     data._career = data._professional_degree;
     data._college = '';
+    data._id_admin = $sessionStorage.data.id;
+    data._cargo = $scope.data.model;
      $scope.loaderUpdatePro = true;
-        registroServices.updateUserData( data ).then(function(){
-        $scope.loaderUpdatePro = false;
-        $scope.dataUpdatePro = registroServices.response;
-        console.log($scope.dataUpdatePro);
-            setTimeout(function() {
-                $('#modalProfesional').modal('hide');
-                $scope.dataUpdatePro.respuesta = ''
-            }, 500);
-        });
+     console.log(data)
+        // registroServices.updateUserData( data ).then(function(){
+        // $scope.loaderUpdatePro = false;
+        // $scope.dataUpdatePro = registroServices.response;
+        // console.log($scope.dataUpdatePro);
+        //     setTimeout(function() {
+        //         $('#modalProfesional').modal('hide');
+        //         $scope.dataUpdatePro.respuesta = ''
+        //     }, 500);
+        // });
 }
 
 
