@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-09-2017 a las 18:35:32
+-- Tiempo de generación: 03-09-2017 a las 18:46:59
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -80,11 +80,11 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listUserBc` (IN `_id_user` INT)  BEGIN
 	IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
 		IF(SELECT EXISTS(SELECT * FROM student WHERE id_user=_id_user))THEN
-			SELECT 'not' as error , 1 as type, u.name, u.last_name, u.ci, u.email, u.city, u.paid, s.college, s.career,u.id
+			SELECT 'not' as error , 1 as type, u.name, u.last_name, u.ci, u.email, u.city, u.cargo, u.paid, s.college, s.career,u.id
             FROM user u INNER JOIN student s ON u.id=s.id_user WHERE u.id=_id_user;
 		ELSE
 			IF(SELECT EXISTS( SELECT * FROM professional WHERE id_user=_id_user))THEN
-				SELECT 'not' as error, 0 as type, u.name, u.last_name, u.ci, u.email, u.city, u.paid, p.professional_degree, u.id
+				SELECT 'not' as error, 0 as type, u.name, u.last_name, u.ci, u.email, u.city, u.cargo, u.paid, p.professional_degree, u.id
 				FROM user u INNER JOIN professional p ON u.id=p.id_user WHERE u.id=_id_user;
             ELSE
 				SELECT  'yes' as error, 'No se encontró el registro' as respuesta; 
