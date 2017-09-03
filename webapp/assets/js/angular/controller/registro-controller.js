@@ -179,15 +179,15 @@ $scope.editStudentData = function(data){
      data._id_admin = $sessionStorage.data.id;
      data._cargo = $scope.data2.model;
      console.log(data);
-        // registroServices.updateUserData( data ).then(function(){
-        // $scope.loaderUpdateStudent = false;
-        // $scope.dataUpdateStudent = registroServices.response;
-        // console.log($scope.dataUpdateStudent);
-        //     setTimeout(function() {
-        //         $('#modalStudent').modal('hide');
-        //         $scope.dataUpdateStudent.respuesta = ''
-        //     }, 1000);
-        // });
+        registroServices.updateUserData( data ).then(function(){
+        $scope.loaderUpdateStudent = false;
+        $scope.dataUpdateStudent = registroServices.response;
+        console.log($scope.dataUpdateStudent);
+            setTimeout(function() {
+                $('#modalStudent').modal('hide');
+                $scope.dataUpdateStudent.respuesta = ''
+            }, 1000);
+        });
 }
 $scope.loaderUpdatePro = false;
 $scope.editProfesionalData = function(data){
@@ -197,15 +197,15 @@ $scope.editProfesionalData = function(data){
     data._cargo = $scope.data.model;
      $scope.loaderUpdatePro = true;
      console.log(data)
-        // registroServices.updateUserData( data ).then(function(){
-        // $scope.loaderUpdatePro = false;
-        // $scope.dataUpdatePro = registroServices.response;
-        // console.log($scope.dataUpdatePro);
-        //     setTimeout(function() {
-        //         $('#modalProfesional').modal('hide');
-        //         $scope.dataUpdatePro.respuesta = ''
-        //     }, 500);
-        // });
+        registroServices.updateUserData( data ).then(function(){
+        $scope.loaderUpdatePro = false;
+        $scope.dataUpdatePro = registroServices.response;
+        console.log($scope.dataUpdatePro);
+            setTimeout(function() {
+                $('#modalProfesional').modal('hide');
+                $scope.dataUpdatePro.respuesta = ''
+            }, 500);
+        });
 }
 
 

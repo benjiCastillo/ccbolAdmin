@@ -162,7 +162,7 @@ class  UserModel
 			$res = array("respuesta"=>$res[1],"error"=>"yes");
 		}else{
 			if($res[1] == 1){
-				$res = array("error"=>$res[0],"type"=>$res[1],"_name"=>$res[2],"_last_name"=>$res[3],"_ci"=>$res[4],"_email"=>$res[5],"_city"=>$res[6],"_college"=>$res[9] ,"_career"=>$res[10],"_id"=>$res[10],"_cargo"=>$res[7] ,"response"=>true);
+				$res = array("error"=>$res[0],"type"=>$res[1],"_name"=>$res[2],"_last_name"=>$res[3],"_ci"=>$res[4],"_email"=>$res[5],"_city"=>$res[6],"_college"=>$res[9] ,"_career"=>$res[10],"_id"=>$res[11],"_cargo"=>$res[7] ,"response"=>true);
 			}else{
 				$res = array("error"=>$res[0],"type"=>$res[1],"_name"=>$res[2],"_last_name"=>$res[3],"_ci"=>$res[4],"_email"=>$res[5],"_city"=>$res[6],"_professional_degree"=>$res[9],"_id"=>$res[10] ,"_cargo"=>$res[7],"response"=>true);
 			}
@@ -208,7 +208,7 @@ class  UserModel
 	
 	public function updateUser($data){
 		$this->mysqli->multi_query(" CALL updateUser('".$data['_id']."',
-														".$data['_id_admin']."',
+														'".$data['_id_admin']."',
 														'".$data['_name']."',
 														'".$data['_last_name']."',
 														'".$data['_ci']."',
