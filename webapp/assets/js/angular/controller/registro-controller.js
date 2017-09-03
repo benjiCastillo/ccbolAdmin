@@ -134,6 +134,7 @@ $scope.getDataUser = function(){
 $scope.showModalEditStudent =  function(student){
     $scope.studentEdit;
     $scope.studentEdit = student;
+    $('#modalStudent').modal('show')
     //select cargo
         $scope.data2 = {
             model: $scope.studentEdit._cargo,
@@ -144,7 +145,7 @@ $scope.showModalEditStudent =  function(student){
             ]
         };
 
-    $('#modalStudent').modal('show')
+
 }
 
 $scope.editStudent = function(){
@@ -164,7 +165,6 @@ $scope.showModalEditProfesional =  function(profesional){
             {name: 'EXPOSITOR'}
             ]
         };
-    $('#modalStudent').modal('show')
 }
 $scope.editProfesional = function(){
     console.log($scope.profesionalEdit)
