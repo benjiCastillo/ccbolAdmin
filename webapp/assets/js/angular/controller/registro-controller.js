@@ -22,7 +22,7 @@ $scope.completeCity = function(string){
         $scope.filterCity = [];
     };
 $scope.fillTextboxCity = function(string){
-    $scope.studentEdit.ciudad = string;
+    $scope.studentEdit._city = string;
     $scope.hidethis = true;
 };
 $scope.completeCity2 = function(string){
@@ -39,7 +39,7 @@ $scope.completeCity2 = function(string){
         $scope.filterCity = [];
     };
 $scope.fillTextboxCity2 = function(string){
-    $scope.profesionalEdit.ciudad = string;
+    $scope.profesionalEdit._city = string;
     $scope.hidethis = true;
 };
 
@@ -58,7 +58,7 @@ $scope.completeCollege = function(string){
         $scope.filterCollege = [];
 };
 $scope.fillTextboxCollege = function(string){
-    $scope.studentEdit.universidad = string;
+    $scope.studentEdit._college = string;
     $scope.hidethisCollege = true;
 };
 $scope.completeCareer = function(string){
@@ -76,7 +76,7 @@ $scope.completeCareer = function(string){
         $scope.filterCareer = [];
 };
 $scope.fillTextboxCareer = function(string){
-    $scope.studentEdit.carrera = string;
+    $scope.studentEdit._career = string;
     $scope.hidethisCareer = true;
 };
 // end autocompletate
@@ -134,6 +134,17 @@ $scope.getDataUser = function(){
 $scope.showModalEditStudent =  function(student){
     $scope.studentEdit;
     $scope.studentEdit = student;
+    $scope.userMod = student;
+    //select cargo
+    console.log($scope.userMod );
+    $scope.data = {
+        model: $scope.userMod._cargo,
+        availableOptions: [
+            {name: 'PARTICIPANTE'},
+            {name: 'ORGANIZADOR'},
+            {name: 'EXPOSITOR'}
+        ]
+    };
     $('#modalStudent').modal('show')
 }
 
@@ -149,6 +160,49 @@ $scope.showModalEditProfesional =  function(profesional){
 }
 $scope.editProfesional = function(){
     console.log($scope.profesionalEdit)
+}
+
+// editar
+$scope.loaderUpdateStudent = false;
+
+$scope.editStudentData = function(data){
+
+
+     $scope.loaderUpdateStudent = true;
+        registroServices.updateUserData( data ).then(function(){
+        $scope.loaderUpdateStudent = false;
+        $scope.dataUpdateStudent = registroServices.response;
+        console.log($scope.dataUpdateStudent);
+            setTimeout(function() {
+                $('#modalStudent').modal('hide');
+                $scope.dataUpdateStudent.respuesta = ''
+            }, 1000);
+        });
+}
+$scope.loaderUpdatePro = false;
+$scope.editProfesionalData = function(data){
+    data._career = data._professional_degree;
+    data._college = '';
+     $scope.loaderUpdatePro = true;
+        registroServices.updateUserData( data ).then(function(){
+        $scope.loaderUpdatePro = false;
+        $scope.dataUpdatePro = registroServices.response;
+        console.log($scope.dataUpdatePro);
+            setTimeout(function() {
+                $('#modalProfesional').modal('hide');
+                $scope.dataUpdatePro.respuesta = ''
+            }, 500);
+        });
+}
+
+
+
+
+
+/*PAID*/
+
+$scope.paid = function(data){
+    console.log(data._id);
 }
 
 

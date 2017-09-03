@@ -514,12 +514,25 @@ nav{
 }
 
 .btn-update{
-    background: #039be5;;
+    background:#337ab7;
+    border: 2px solid #2e6da4;
     color:white;
 }
 .btn-update:hover, .btn-update:active, .btn-update:focus{
-    background: #00518d;
+    background: #286090;
+    border: 2px solid #204d74;
 }
+.btn-paid{
+    background:#5cb85c ;
+    color:white;
+    border: 2px solid #4cae4c;
+}
+.btn-paid:hover, .btn-paid:active, .btn-paid:focus{
+    background:#449d44 ;
+    border: 2px solid #398439;
+    
+}
+
 .btn-close-modal{
     position: absolute;
     right: 14px;
