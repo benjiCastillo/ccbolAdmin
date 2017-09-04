@@ -35,13 +35,14 @@ $app->group('/user',function(){
 	});
 
 	
-	$this->get('/userPaidBc/{id}',function($req, $res, $args){
-		return $res->withHeader('Content-type', 'aplication/json')
-				   ->write(
-				   		json_encode($this->model->User->userPaidBc($args['id']))
-				   		
-				   	);
-	});
+	$this->post('/userPaidBc/',function($req, $res, $args){
+		
+				return $res->withHeader('Content-type', 'aplication/json')
+						   -> write(
+								json_encode($this->model->User->userPaidBc($req->getParsedBody()))
+		
+							   );
+			});
 
 	$this->get('/logout/{id}',function($req, $res, $args){
 		return $res->withHeader('Content-type', 'aplication/json')
