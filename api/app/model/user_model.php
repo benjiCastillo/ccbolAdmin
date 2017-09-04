@@ -133,7 +133,7 @@ class  UserModel
 			}
 		$res = $arreglo;
 		mysqli_close($this->mysqli);
-		$res = array($res[0], $res[1]);
+		$res = array($res[0]);
 		return $res;		 
 }
 
