@@ -215,7 +215,15 @@ $scope.editProfesionalData = function(data){
 /*PAID*/
 
 $scope.paid = function(data){
-    console.log(data._id);
+    data._id_admin = $sessionStorage.data.id;    
+        registroServices.updateUserData( data ).then(function(){
+        $scope.dataUpdatePro = registroServices.response;
+        console.log($scope.dataUpdatePro);
+            setTimeout(function() {
+                $('#modalProfesional').modal('hide');
+                $scope.dataUpdatePro.respuesta = ''
+            }, 500);
+        });
 }
 
 

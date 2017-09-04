@@ -8,7 +8,7 @@ app.factory('registroServices', ['$http','$q','$rootScope', function($http,$q,$r
 					// console.log(datos);
                     $http({
                       method: 'POST',
-					  	url: 'http://localhost/ccbolAdmin/api/public/user/adminLogin/',
+					  	url: 'http://192.168.1.3/ccbolAdmin/api/public/user/adminLogin/',
  						data: datos
                     	})
                         .then(function successCallback(response) {
@@ -28,7 +28,7 @@ app.factory('registroServices', ['$http','$q','$rootScope', function($http,$q,$r
 					// console.log(datos);
                     $http({
                       method: 'GET',
-					  	url: 'http://localhost/ccbolAdmin/api/public/user/listUserBc/'+datos
+					  	url: 'http://192.168.1.3/ccbolAdmin/api/public/user/listUserBc/'+datos
                     	})
                         .then(function successCallback(response) {
 								// console.log(response.data);
@@ -47,7 +47,7 @@ app.factory('registroServices', ['$http','$q','$rootScope', function($http,$q,$r
 					// console.log(datos);
                     $http({
                       method: 'POST',
-						  url: 'http://localhost/ccbolAdmin/api/public/user/updateUser/',
+						  url: 'http://192.168.1.3/ccbolAdmin/api/public/user/updateUser/',
 						  data: datos
                     	})
                         .then(function successCallback(response) {
@@ -67,7 +67,7 @@ app.factory('registroServices', ['$http','$q','$rootScope', function($http,$q,$r
 					// console.log(datos);
                     $http({
                           method: 'POST',
-						  url: 'http://localhost/ccbolAdmin/api/public/user/adminLogin/',
+						  url: 'http://192.168.1.3/ccbolAdmin/api/public/user/adminLogin/',
 						  data: datos
                     	})
                         .then(function successCallback(response) {
@@ -81,7 +81,27 @@ app.factory('registroServices', ['$http','$q','$rootScope', function($http,$q,$r
 								return d.resolve();
                         });
                        return d.promise;	 
-		}									
+		},	
+		paidUser : function(datos){
+					var d = $q.defer();
+					// console.log(datos);
+                    $http({
+                          method: 'POST',
+						  url: 'http://192.168.1.3/ccbolAdmin/api/public/user/adminLogin/',
+						  data: datos
+                    	})
+                        .then(function successCallback(response) {
+								// console.log(response.data);
+								self.response 	= response.data;
+								
+								return d.resolve()	
+                            }, function errorCallback(response) {
+								
+								self.response 	= response.data
+								return d.resolve();
+                        });
+                       return d.promise;	 
+		}														
 
 	}
 
