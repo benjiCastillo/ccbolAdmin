@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-09-2017 a las 02:43:23
+-- Tiempo de generación: 04-09-2017 a las 02:50:28
 -- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 5.6.23
+-- Versión de PHP: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `ccbol_db`
+-- Base de datos: `ccbol`
 --
 
 DELIMITER $$
@@ -128,21 +128,17 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `userPaidBc` (IN `_id_user` INT, IN 
 	IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
 		IF(SELECT EXISTS(SELECT * FROM student WHERE id_user=_id_user))THEN
 			UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
-            
-			SELECT u.name, u.last_name, u.ci, u.email, u.city, u.paid, s.college, s.career 
-            FROM user u INNER JOIN student s ON u.id=s.id_user WHERE u.id=_id_user;
+			SELECT 'not' as error, 'Acreditación correcta' as respuesta;
 		ELSE
 			IF(SELECT EXISTS( SELECT * FROM professional WHERE id_user=_id_user))THEN
 				UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
-                
-				SELECT u.name, u.last_name, u.ci, u.email, u.city, u.paid, p.professional_degree
-				FROM user u INNER JOIN professional p ON u.id=p.id_user WHERE u.id=_id_user;
+				SELECT 'not' as error, 'Acreditación correcta' as respuesta;
             ELSE
-				SELECT 'No se encontró el registro' as respuesta, 'yes' as error; 
+				SELECT 'yes' as error, 'No se encontró el registro' as respuesta; 
             END IF;
         END IF;
     ELSE
-		SELECT 'No se encontró el registro' as respuesta, 'yes' as error; 
+		SELECT 'yes' as error, 'No se encontró el registro' as respuesta; 
     END IF;
 END$$
 

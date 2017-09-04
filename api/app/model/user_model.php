@@ -133,7 +133,7 @@ class  UserModel
 			}
 		$res = $arreglo;
 		mysqli_close($this->mysqli);
-		$res = array("message"=>$res[0], "response"=>true);
+		$res = array($res[0], $res[1]);
 		return $res;		 
 }
 
