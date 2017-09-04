@@ -128,13 +128,9 @@ class  UserModel
                                                     '".$data['_id_admin']."')");
 
 		$res = $this->mysqli->store_result();
-			while ($fila = $res->fetch_assoc()) {
-				$arreglo[] = $fila;
-			}
-		$res = $arreglo;
+		$res = $res->fetch_assoc();
 		mysqli_close($this->mysqli);
-		$res = array($res[0]);
-		return $res;		 
+		return $res;	 
 }
 
 	public function userPaidCi($data){
