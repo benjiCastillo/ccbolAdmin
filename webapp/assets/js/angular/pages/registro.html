@@ -29,7 +29,7 @@
                 <h3> <b>Cargo:</b> <span style="background: turquoise;">{{ dataUser._cargo }}</span></h3>
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditStudent(dataUser)"> Editar Datos</button>
                 <button class="btn btn-transparent-gmail btn-paid" ng-click="paid(dataUser)"> Registrar Pago </button>
-                
+                <p>{{ dataPaidUser }}</p>
             </section>   
             <section ng-show="viewProfesional">
                 <h3>Datos Personales</h3>
@@ -41,6 +41,7 @@
                 <h3> <b>Cargo:</b> <span style="background: turquoise;">{{ dataUser._cargo }}</span> </h3>
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditProfesional(dataUser)"> Editar Datos</button>
                 <button class="btn btn-transparent-gmail btn-paid" ng-click="paid(dataUser)"> Registrar Pago </button>
+                <p>{{ dataPaidUser }}</p>
             </section>    
 
         </div>

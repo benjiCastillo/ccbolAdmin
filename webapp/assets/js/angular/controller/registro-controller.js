@@ -213,16 +213,17 @@ $scope.editProfesionalData = function(data){
 
 
 /*PAID*/
-
+$scope.dataPaidUser = "";
+$scope.dataPaid = {};
 $scope.paid = function(data){
-    data._id_admin = $sessionStorage.data.id;    
-        registroServices.updateUserData( data ).then(function(){
-        $scope.dataUpdatePro = registroServices.response;
-        console.log($scope.dataUpdatePro);
-            setTimeout(function() {
-                $('#modalProfesional').modal('hide');
-                $scope.dataUpdatePro.respuesta = ''
-            }, 500);
+
+    $scope.dataPaid._id_user =data._id;
+    $scope.dataPaid._id_admin =$sessionStorage.data.id; 
+    console.log($scope.dataPaid);
+
+    registroServices.userPaidBc( $scope.dataPaid ).then(function(){
+        $scope.dataPaidUser = registroServices.response;
+        console.log($scope.dataPaidUser);
         });
 }
 

@@ -82,12 +82,12 @@ app.factory('registroServices', ['$http','$q','$rootScope', function($http,$q,$r
                         });
                        return d.promise;	 
 		},	
-		paidUser : function(datos){
+		userPaidBc : function(datos){
 					var d = $q.defer();
 					// console.log(datos);
                     $http({
                           method: 'POST',
-						  url: 'http://192.168.1.3/ccbolAdmin/api/public/user/adminLogin/',
+						  url: 'http://192.168.1.3/ccbolAdmin/api/public/user/userPaidBc/',
 						  data: datos
                     	})
                         .then(function successCallback(response) {
