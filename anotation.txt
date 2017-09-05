@@ -1,0 +1,14 @@
+nombre
+universidad
+cargo (director, delegados docentes, delegados estudiantil)
+carrera (informatica, sistemas, telecomunicaciones)
+
+//user to uper
+
+UPDATE `user` SET last_name=UPPER(last_name),ci=UPPER(ci), email=UPPER(email), city=UPPER(city) WHERE 1
+
+//student
+UPDATE `student` SET college=UPPER(college),career=UPPER(career) WHERE 1
+//profesional
+UPDATE `professional` SET professional_degree=UPPER(professional_degree) WHERE 1
+
