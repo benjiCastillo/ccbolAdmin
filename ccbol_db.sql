@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-09-2017 a las 21:45:09
+-- Tiempo de generación: 05-09-2017 a las 22:42:23
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -124,28 +124,32 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updateUser` (IN `_id_user` INT, IN 
     END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `userPaidBc` (IN `_id_user` INT, IN `_id_admin` INT, IN `_beca` BOOLEAN)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `userPaidBc` (IN `_id_user` INT, IN `_id_admin` INT, IN `_beca` TINYINT(1))  BEGIN
 IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin))THEN
 	IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
 		IF(SELECT EXISTS(SELECT * FROM student WHERE id_user=_id_user))THEN
 			IF(_beca=0)THEN
 				UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
-				SELECT 'not' as error, 'Acreditación correcta' as respuesta;
 			END IF;
             IF(_beca=1)then
 				UPDATE user SET paid=2, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
-				SELECT 'not' as error, 'Acreditación correcta' as respuesta;
             END IF;
+            IF(_beca=2)then
+				UPDATE user SET paid=3, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
+            END IF;
+            SELECT 'not' as error, 'Acreditación correcta' as respuesta;
 		ELSE
 			IF(SELECT EXISTS( SELECT * FROM professional WHERE id_user=_id_user))THEN
 				IF(_beca=0)THEN
 					UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
-					SELECT 'not' as error, 'Acreditación correcta' as respuesta;
                 END IF;
                 IF(_beca=1)then
 					UPDATE user SET paid=2, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
-					SELECT 'not' as error, 'Acreditación correcta' as respuesta;
 				END IF;
+                IF(_beca=2)then
+				UPDATE user SET paid=3, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
+            END IF;
+            SELECT 'not' as error, 'Acreditación correcta' as respuesta;
             ELSE
 				SELECT 'yes' as error, 'No se encontró el registro' as respuesta; 
             END IF;
@@ -1120,7 +1124,7 @@ INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `r
 (146, 'Maribel Maritza', 'Calle Averanga', '9241807', 'maryel.2mary@gmail.com', 'La Paz', 0, '2017-08-15 02:55:37', 'PARTICIPANTE', '0000-00-00 00:00:00', 0),
 (147, 'Miguel Demetrio', 'Oropeza Quisbert', '9879793', 'demetrio947@yahoo.es', 'La Paz', 0, '2017-08-15 02:56:49', 'PARTICIPANTE', '0000-00-00 00:00:00', 0),
 (148, 'Roberto Ruslan', 'Chambi Matha', '8324915', 'roby.mat11@gmail.com', 'La Paz', 0, '2017-08-15 03:53:01', 'PARTICIPANTE', '0000-00-00 00:00:00', 0),
-(149, 'Aleyda Verónica', 'Villa-Gómez Zuleta', '5676656', 'aleve.villagomez.zuleta.93@gmail.com', 'Tarija', 1, '2017-08-15 04:02:34', 'PARTICIPANTE', '2017-09-05 19:44:15', 1),
+(149, 'Aleyda Verónica', 'Villa-Gómez Zuleta', '5676656', 'aleve.villagomez.zuleta.93@gmail.com', 'Tarija', 3, '2017-08-15 04:02:34', 'PARTICIPANTE', '2017-09-05 20:41:51', 1),
 (150, 'Marco Vladimir', 'Ordoñez Marca', '6732337', 'mvladyom@gmail.com', 'La Paz', 0, '2017-08-15 04:04:14', 'PARTICIPANTE', '0000-00-00 00:00:00', 0),
 (151, 'Neith', 'Cabrera Colque', '7055848', 'cabrera.ne.93@gmail.com', 'La Paz', 0, '2017-08-15 04:54:05', 'PARTICIPANTE', '0000-00-00 00:00:00', 0),
 (152, 'Claudia', 'Yupanqui Aruni', '8386621', 'yaczoe@gmail.com', 'La Paz', 0, '2017-08-15 06:30:49', 'PARTICIPANTE', '0000-00-00 00:00:00', 0),
@@ -1791,7 +1795,9 @@ INSERT INTO `user_aud` (`id`, `id_user`, `name`, `last_name`, `ci`, `email`, `ci
 (641, 149, 'Aleyda Verónica', 'Villa-Gómez Zuleta', '5676656', 'aleve.villagomez.zuleta.93@gmail.com', 'Tarija', 1, '2017-08-15 04:02:34', 'PARTICIPANTE', 1, '2017-09-04 01:31:43', 'UPDATED', '2017-09-04 01:31:50'),
 (642, 149, 'Aleyda Verónica', 'Villa-Gómez Zuleta', '5676656', 'aleve.villagomez.zuleta.93@gmail.com', 'Tarija', 1, '2017-08-15 04:02:34', 'PARTICIPANTE', 13, '2017-09-04 01:31:50', 'UPDATED', '2017-09-04 01:31:57'),
 (643, 149, 'Aleyda Verónica', 'Villa-Gómez Zuleta', '5676656', 'aleve.villagomez.zuleta.93@gmail.com', 'Tarija', 1, '2017-08-15 04:02:34', 'PARTICIPANTE', 1366, '2017-09-04 01:31:57', 'UPDATED', '2017-09-05 19:43:12'),
-(644, 149, 'Aleyda Verónica', 'Villa-Gómez Zuleta', '5676656', 'aleve.villagomez.zuleta.93@gmail.com', 'Tarija', 2, '2017-08-15 04:02:34', 'PARTICIPANTE', 1, '2017-09-05 19:43:12', 'UPDATED', '2017-09-05 19:44:15');
+(644, 149, 'Aleyda Verónica', 'Villa-Gómez Zuleta', '5676656', 'aleve.villagomez.zuleta.93@gmail.com', 'Tarija', 2, '2017-08-15 04:02:34', 'PARTICIPANTE', 1, '2017-09-05 19:43:12', 'UPDATED', '2017-09-05 19:44:15'),
+(645, 149, 'Aleyda Verónica', 'Villa-Gómez Zuleta', '5676656', 'aleve.villagomez.zuleta.93@gmail.com', 'Tarija', 1, '2017-08-15 04:02:34', 'PARTICIPANTE', 1, '2017-09-05 19:44:15', 'UPDATED', '2017-09-05 20:41:27'),
+(646, 149, 'Aleyda Verónica', 'Villa-Gómez Zuleta', '5676656', 'aleve.villagomez.zuleta.93@gmail.com', 'Tarija', 2, '2017-08-15 04:02:34', 'PARTICIPANTE', 1, '2017-09-05 20:41:27', 'UPDATED', '2017-09-05 20:41:51');
 
 --
 -- Índices para tablas volcadas
@@ -1917,7 +1923,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `user_aud`
 --
 ALTER TABLE `user_aud`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=645;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=647;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
