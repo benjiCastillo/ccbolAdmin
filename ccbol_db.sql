@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-09-2017 a las 22:42:23
+-- Tiempo de generación: 06-09-2017 a las 00:17:33
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -128,25 +128,25 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `userPaidBc` (IN `_id_user` INT, IN 
 IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin))THEN
 	IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
 		IF(SELECT EXISTS(SELECT * FROM student WHERE id_user=_id_user))THEN
-			IF(_beca=0)THEN
+			IF(_beca=1)THEN
 				UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
 			END IF;
-            IF(_beca=1)then
+            IF(_beca=2)then
 				UPDATE user SET paid=2, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
             END IF;
-            IF(_beca=2)then
+            IF(_beca=3)then
 				UPDATE user SET paid=3, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
             END IF;
             SELECT 'not' as error, 'Acreditación correcta' as respuesta;
 		ELSE
 			IF(SELECT EXISTS( SELECT * FROM professional WHERE id_user=_id_user))THEN
-				IF(_beca=0)THEN
+				IF(_beca=1)THEN
 					UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
                 END IF;
-                IF(_beca=1)then
+                IF(_beca=2)then
 					UPDATE user SET paid=2, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
 				END IF;
-                IF(_beca=2)then
+                IF(_beca=3)then
 				UPDATE user SET paid=3, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
             END IF;
             SELECT 'not' as error, 'Acreditación correcta' as respuesta;
