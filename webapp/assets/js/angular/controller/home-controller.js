@@ -47,4 +47,16 @@ app.controller('homeCtrl', ['$scope','$location','registroServices','$sessionSto
             }
         });
     } 
+
+    /*loaction segurity*/
+
+    $scope.auth = function(){
+        $scope.successAccess = false;
+        if($location.path() == '/'){
+            $sessionStorage.data.id = undefined;
+        }
+    }
+
+    $scope.auth();
+
 }]) 

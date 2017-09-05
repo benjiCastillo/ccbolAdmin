@@ -1,4 +1,42 @@
-<section class="container"> 
+<nav>
+    <section class="nav-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2 navigation-col__logo">
+                    <div class="logo__wrapper-table">
+                        <div class="logo__wrapper-cell">
+                            <a href="#">
+                                <img class="logo__image" src="assets/img/logo-ccbol-2017.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-10 navigation-col__links hidden-xs hidden-sm">
+                    <ul>
+                        <li><a  ng-click="logOut()">Salir</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-offset-10 col-xs-2 visible-xs visible-sm">
+                    <span id="icon-menu"></span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section id="menu-xs-sm" class=" visible-xs visible-sm" data-active='false'>
+        <div class="menu">
+            <ul class="menu-items">
+                <li class="menu-item"><a ng-click="logOut()">Salir</a></li>
+        </div>
+    </section>
+</nav>
+
+<section class="container" ng-show="!successAccess">
+    <div class="row">
+        <h1 class="text-center">No tienes Autorizacion para esta aqui!</h1>
+    </div>
+</section>
+<section class="container" ng-show="successAccess"> 
     <div class="row">
         <h1>Registro</h1>
         
@@ -28,8 +66,9 @@
                 <p> <b>Carrera:</b> {{ dataUser._career }}</p>
                 <h3> <b>Cargo:</b> <span style="background: turquoise;">{{ dataUser._cargo }}</span></h3>
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditStudent(dataUser)"> Editar Datos</button>
-                <button class="btn btn-transparent-gmail btn-paid" ng-click="paid(dataUser)"> Registrar Pago </button>
-                <p>{{ dataPaidUser }}</p>
+                <button class="btn btn-transparent-gmail btn-paid" ng-show="paidSuccess"  ng-click="paid(dataUser)"> Registrar Pago </button>
+                <h3 ng-show="!paidSuccess">La persona fue correctamente acreditada</h3>
+                <!-- <p>{{ dataPaidUser }}</p> -->
             </section>   
             <section ng-show="viewProfesional">
                 <h3>Datos Personales</h3>
@@ -40,8 +79,9 @@
                 <p> <b>Profesion:</b> {{ dataUser._professional_degree }}</p>
                 <h3> <b>Cargo:</b> <span style="background: turquoise;">{{ dataUser._cargo }}</span> </h3>
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditProfesional(dataUser)"> Editar Datos</button>
-                <button class="btn btn-transparent-gmail btn-paid" ng-click="paid(dataUser)"> Registrar Pago </button>
-                <p>{{ dataPaidUser }}</p>
+                <button class="btn btn-transparent-gmail btn-paid" ng-show="paidSuccess" ng-click="paid(dataUser)"> Registrar Pago </button>
+                <h3 ng-show="!paidSuccess">La persona fue correctamente acreditada</h3>
+                <!-- <p>{{ dataPaidUser }}</p> -->
             </section>    
 
         </div>
@@ -58,7 +98,7 @@
         <h4 class="modal-title name-hotel-modal">Datos Generales</h4>
       </div>
       <div class="modal-body">
-        <form name="frmStudent" ng-submit="editStudentData(studentEdit)">
+        <form name="frmStudent" ng-submit="editStudentData(studentEdit,frmStudent)">
             <div class="form-group">
             <label>Nombres </label>
                 <input type="text" class="form-control" placeholder="Nombres"
@@ -106,13 +146,20 @@
                     </ul>
               </div>
             </div>
-
             <div class="form-group">
+                <label>Cargo </label>
+                    <input type="text" class="form-control" placeholder="Cargo"
+                        ng-model="studentEdit._cargo" required>
+            </div>
+             <div class="form-group">
                 <label>Cargo</label>
-                <select name="repeatSelect" class="form-control" id="repeatSelect" ng-model="data2.model">
-                    <option ng-repeat="option in data.availableOptions" value="{{ option.name }}" ng-selected="studentEdit._cargo">{{option.name}}</option>
+                <select name="repeatSelect" class="form-control" 
+                id="repeatSelect" 
+                ng-model="studentEdit._cargo"
+                ng-init=" repeatSelect = dataS[0].name"  
+                ng-options="option.name as option.name for option in dataS" ng-selected="studentEdit._cargo">          
                 </select>
-            </div>    
+            </div>     
             <br><br> 
 
             <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
@@ -174,19 +221,28 @@
               <input type="text" class="form-control" placeholder="Profesión"
                   ng-model="profesionalEdit._professional_degree ">
             </div>
-
             <div class="form-group">
+                <label>Cargo </label>
+                    <input type="text" class="form-control" placeholder="Cargo"
+                        ng-model="profesionalEdit._cargo" required>
+            </div>
+
+             <div class="form-group">
                 <label>Cargo</label>
-                <select name="repeatSelect2" class="form-control" id="repeatSelec2t" ng-model="data.model">
-                    <option ng-repeat="option in data.availableOptions" value="{{ option.name }}" ng-selected="profesionalEdit._cargo">{{option.name}}</option>
+                <select name="repeatSelect2" class="form-control" 
+                id="repeatSelect2" 
+                ng-model="profesionalEdit._cargo"
+                ng-init=" repeatSelect = dataP[0].name"  
+                ng-options="option.name as option.name for option in dataP" ng-selected="profesionalEdit._cargo" >          
                 </select>
-            </div>    
+            </div>     
 
             <br><br>               
             <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
             <br><br>
             <span ng-show="loaderUpdatePro  ">Cargando...</span>    
             <span ng-show="!loaderUpdatePro ">{{ dataUpdatePro.respuesta  }}</span>
+
 
         </form>
       </div>
