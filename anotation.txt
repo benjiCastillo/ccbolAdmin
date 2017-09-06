@@ -3,6 +3,9 @@ universidad
 cargo (director, delegados docentes, delegados estudiantil)
 carrera (informatica, sistemas, telecomunicaciones)
 
+///
+update paid
+update user set paid = 0
 //user to uper
 
 UPDATE `user` SET last_name=UPPER(last_name),ci=UPPER(ci), email=UPPER(email), city=UPPER(city) WHERE 1
