@@ -1,7 +1,7 @@
 var app = angular.module('ccbolApp.registroServices',[])
 
 app.factory('registroServices', ['$http','$q','$rootScope', function($http,$q,$rootScope){
-var  urlServer ="localhost"; 
+var  urlServer ="192.168.43.207"; 
 
 	var self ={
 		guardarEst : function(datos){

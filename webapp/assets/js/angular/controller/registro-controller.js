@@ -150,7 +150,8 @@ $scope.getDataUser = function(){
 $scope.showModalEditStudent =  function(student){
     $scope.studentEdit;
     $scope.studentEdit = student;
-
+    // var idBeca = document.getElementById('repeatSelectBeca').item(0).value;
+    // $scope.studentEdit._paid = idBeca;
     $('#modalStudent').modal('show');
         $scope.dataS = [
         {
@@ -160,7 +161,21 @@ $scope.showModalEditStudent =  function(student){
         }, {
             name: 'ORGANIZADOR'
         }];
-
+    $scope.dataSBeca =  [
+         {   id:'0',
+            name: 'NO PAGADO'
+        },
+         {   id:'1',
+            name: 'NO BECADO'
+        },
+        {
+            id:'2',
+            name: 'BECADO'
+        },
+        {
+            id:'3',
+            name: 'MEDIA BECA'
+        }];      
 }
 
 $scope.editStudent = function(){
@@ -180,6 +195,21 @@ $scope.showModalEditProfesional =  function(profesional){
         }, {
             name: 'ORGANIZADOR'
     }];
+    $scope.dataPBeca = [
+         {   id:'0',
+            name: 'NO PAGADO'
+        },
+         {   id:'1',
+            name: 'NO BECADO'
+        },
+        {
+            id:'2',
+            name: 'BECADO'
+        },
+        {
+            id:'3',
+            name: 'MEDIA BECA'
+        }];       
 
 
 }
@@ -238,6 +268,7 @@ $scope.paid = function(data){
 
     $scope.dataPaid._id_user =data._id;
     $scope.dataPaid._id_admin =$sessionStorage.data.id; 
+    $scope.dataPaid._beca =data._paid; 
     console.log($scope.dataPaid);
 
     registroServices.userPaidBc( $scope.dataPaid ).then(function(){

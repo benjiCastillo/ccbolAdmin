@@ -64,7 +64,11 @@
                 <p> <b>Ciudad:</b> {{ dataUser._city }}</p>
                 <p> <b>Universidad:</b> {{ dataUser._college }}</p>
                 <p> <b>Carrera:</b> {{ dataUser._career }}</p>
-                <h3> <b>Cargo:</b> <span style="background: turquoise;">{{ dataUser._cargo }}</span></h3>
+                <p> <b>Cargo:</b> {{ dataUser._cargo }}</p>
+                <h3 ng-show="dataUser._paid  === '0' " > <b></b> <span style="background: turquoise;">NO PAGADO</span> </h3>
+                <h3 ng-show="dataUser._paid  === '1' " > <b></b> <span style="background: turquoise;">NO BECADO</span> </h3>
+                <h3 ng-show="dataUser._paid  === '2' " > <b></b> <span style="background: turquoise;">BECADO</span> </h3>
+                <h3 ng-show="dataUser._paid  === '3' " > <b></b> <span style="background: turquoise;">MEDIA BECA</span> </h3>
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditStudent(dataUser)"> Editar Datos</button>
                 <button class="btn btn-transparent-gmail btn-paid" ng-show="paidSuccess"  ng-click="paid(dataUser)"> Registrar Pago </button>
                 <h3 ng-show="!paidSuccess">La persona fue correctamente acreditada</h3>
@@ -78,6 +82,10 @@
                 <p> <b>Ciudad:</b> {{ dataUser._city }}</p>
                 <p> <b>Profesion:</b> {{ dataUser._professional_degree }}</p>
                 <h3> <b>Cargo:</b> <span style="background: turquoise;">{{ dataUser._cargo }}</span> </h3>
+                <h3 ng-show="dataUser._paid  === '0' " > <b></b> <span style="background: turquoise;">NO PAGADO</span> </h3>
+                <h3 ng-show="dataUser._paid  === '1' " > <b></b> <span style="background: turquoise;">NO BECADO</span> </h3>
+                <h3 ng-show="dataUser._paid  === '2' " > <b></b> <span style="background: turquoise;">BECADO</span> </h3>
+                <h3 ng-show="dataUser._paid  === '3' " > <b></b> <span style="background: turquoise;">MEDIA BECA</span> </h3>
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditProfesional(dataUser)"> Editar Datos</button>
                 <button class="btn btn-transparent-gmail btn-paid" ng-show="paidSuccess" ng-click="paid(dataUser)"> Registrar Pago </button>
                 <h3 ng-show="!paidSuccess">La persona fue correctamente acreditada</h3>
@@ -146,25 +154,30 @@
                     </ul>
               </div>
             </div>
-            <div class="form-group">
-                <label>Cargo </label>
-                    <input type="text" class="form-control" placeholder="Cargo"
-                        ng-model="studentEdit._cargo" required>
-            </div>
              <div class="form-group">
                 <label>Cargo</label>
-                <select name="repeatSelect" class="form-control" 
-                id="repeatSelect" 
+                <select name="repeatSelectCargoS" class="form-control" 
+                id="repeatSelectCargoS" 
                 ng-model="studentEdit._cargo"
                 ng-init=" repeatSelect = dataS[0].name"  
                 ng-options="option.name as option.name for option in dataS" ng-selected="studentEdit._cargo">          
                 </select>
             </div>     
+            <div class="form-group">
+                <label>Becado</label>
+                <select name="repeatSelectBecadoS" class="form-control" 
+                id="repeatSelectBecadoS" 
+                ng-model="studentEdit._paid"
+                ng-init=" repeatSelect = dataSBeca[0].name"  
+                ng-options="option.id as option.name for option in dataSBeca" ng-selected="studentEdit._paid">          
+                </select>
+            </div>   
             <br><br> 
 
             <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
             <br>
             <br>
+            <p>{{ studentEdit }}</p>
             <span ng-show="loaderUpdateStudent">Cargando...</span>    
             <span ng-show="!loaderUpdateStudent">{{ dataUpdateStudent.respuesta }}</span>
 
@@ -221,11 +234,6 @@
               <input type="text" class="form-control" placeholder="Profesión"
                   ng-model="profesionalEdit._professional_degree ">
             </div>
-            <div class="form-group">
-                <label>Cargo </label>
-                    <input type="text" class="form-control" placeholder="Cargo"
-                        ng-model="profesionalEdit._cargo" required>
-            </div>
 
              <div class="form-group">
                 <label>Cargo</label>
@@ -235,11 +243,21 @@
                 ng-init=" repeatSelect = dataP[0].name"  
                 ng-options="option.name as option.name for option in dataP" ng-selected="profesionalEdit._cargo" >          
                 </select>
-            </div>     
+            </div> 
+             <div class="form-group">
+                <label>Beca</label>
+                <select name="repeatSelect2" class="form-control" 
+                id="repeatSelect2" 
+                ng-model="profesionalEdit._paid"
+                ng-init=" repeatSelect = dataPBeca[0].name"  
+                ng-options="option.id as option.name for option in dataPBeca" ng-selected="profesionalEdit._paid" >          
+                </select>
+            </div>                 
 
             <br><br>               
             <button type="submit" class="btn btn-transparent-gmail btn-update"> Editar</button>
             <br><br>
+            {{  profesionalEdit }}
             <span ng-show="loaderUpdatePro  ">Cargando...</span>    
             <span ng-show="!loaderUpdatePro ">{{ dataUpdatePro.respuesta  }}</span>
 
