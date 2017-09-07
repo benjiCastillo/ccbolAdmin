@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-09-2017 a las 12:47:35
+-- Tiempo de generación: 07-09-2017 a las 14:10:10
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -106,7 +106,20 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `print` (IN `_id_admin1` INT, IN `_i
 	IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin1 OR id=_id_admin2))THEN
 		SELECT 'not' as error, name, last_name, cargo as cantidad FROM user WHERE (id_admin=_id_admin1 OR id_admin=_id_admin2) AND (paid=1) AND (printed=0) AND (printed_check=0) ORDER BY inscription_date ASC LIMIT 10;
 	ELSE
-		SELECT 'yes' as error, 'Administrador no encontrado' as respuesta;
+		SELECT 'yes' as error, 'Error, Administrador no encontrado' as respuesta;
+	END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `printChecked` (IN `_id_user` INT)  BEGIN
+	IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
+		IF(SELECT EXISTS(SELECT * FROM user WHERE printed_check=0 AND id=_id_user))THEN
+			UPDATE user SET printed_check = 1 WHERE id = _id_user;
+			SELECT 'not' as error, 'Registro impreso correctamente' as respuesta;
+		ELSE
+			SELECT 'yes' as error, 'El registro ya fué impreso' as respuesta;
+        END IF;
+	ELSE
+		SELECT 'yes' as error, 'Registro no encontrado' as respuesta;
 	END IF;
 END$$
 
@@ -115,6 +128,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `printCount` (IN `_id_admin1` INT, I
 		SELECT 'not' as error, count(id) as cantidad FROM user WHERE (id_admin=_id_admin1 OR id_admin=_id_admin2) AND (paid=1) AND (printed=0) AND (printed_check=0) ORDER BY inscription_date ASC;
 	ELSE
 		SELECT 'yes' as error, 'Error administrador' as respuesta;
+	END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `printUpdate` (IN `_id_admin1` INT, IN `_id_admin2` INT)  BEGIN
+	IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin1 OR id=_id_admin2))THEN
+		UPDATE user SET printed=1 WHERE ((id_admin=_id_admin1 OR id_admin=_id_admin2) AND (paid=1) AND (printed=0) AND (printed_check=0)) ORDER BY inscription_date ASC LIMIT 10;
+		SELECT 'not' as error, 'Registros impresos correctamente';
+    ELSE
+		SELECT 'yes' as error, 'Error, Administrador no encontrado' as respuesta;
 	END IF;
 END$$
 
@@ -1150,17 +1172,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `registration_date`, `cargo`, `inscription_date`, `id_admin`, `printed`, `printed_check`) VALUES
-(132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', '2017-09-19 11:00:00', 1, 0, 0),
-(133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', '2017-09-20 04:00:00', 2, 0, 0),
-(137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', '2017-09-21 04:00:00', 1, 0, 0),
-(138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 1, '2017-08-15 00:42:42', 'PARTICIPANTE', '2017-09-22 04:00:00', 2, 0, 0),
-(139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', '2017-09-22 04:00:00', 1, 0, 0),
+(132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', '2017-09-19 11:00:00', 1, 1, 0),
+(133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', '2017-09-20 04:00:00', 2, 1, 0),
+(137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', '2017-09-21 04:00:00', 1, 1, 0),
+(138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 1, '2017-08-15 00:42:42', 'PARTICIPANTE', '2017-09-22 04:00:00', 2, 1, 0),
+(139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', '2017-09-22 04:00:00', 1, 1, 0),
 (140, 'Tatiana Germania', 'Chumacero Garcia', '4763971', 'chumacerotatiana@gmail.com', 'La Paz', 1, '2017-08-15 01:47:33', 'PARTICIPANTE', '2017-09-23 04:00:00', 1, 0, 0),
 (141, 'VICTOR ALEJANDRO', 'ALCON CONDORI', '6964035', 'v.alejandro.alcon.c@gmail.com', 'La Paz', 1, '2017-08-15 01:48:37', 'PARTICIPANTE', '2017-09-24 04:00:00', 1, 0, 0),
-(142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', '2017-08-04 04:00:00', 2, 0, 0),
-(143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', '2017-09-05 04:00:00', 1, 0, 0),
-(144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', '2017-09-07 04:00:00', 1, 0, 0),
-(145, 'Alejandro', 'Mancilla', '8359856', 'alejandro-mancilla@outlook.com', 'La Paz', 1, '2017-08-15 02:21:07', 'PARTICIPANTE', '2017-09-01 04:00:00', 2, 0, 0),
+(142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', '2017-08-04 04:00:00', 2, 1, 0),
+(143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', '2017-09-05 04:00:00', 1, 1, 0),
+(144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', '2017-09-07 04:00:00', 1, 1, 0),
+(145, 'Alejandro', 'Mancilla', '8359856', 'alejandro-mancilla@outlook.com', 'La Paz', 1, '2017-08-15 02:21:07', 'PARTICIPANTE', '2017-09-01 04:00:00', 2, 1, 0),
 (146, 'Maribel Maritza', 'Calle Averanga', '9241807', 'maryel.2mary@gmail.com', 'La Paz', 0, '2017-08-15 02:55:37', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (147, 'Miguel Demetrio', 'Oropeza Quisbert', '9879793', 'demetrio947@yahoo.es', 'La Paz', 0, '2017-08-15 02:56:49', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (148, 'Roberto Ruslan', 'Chambi Matha', '8324915', 'roby.mat11@gmail.com', 'La Paz', 0, '2017-08-15 03:53:01', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
@@ -1707,7 +1729,7 @@ INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `r
 (695, 'Josue', 'Peducasse Carranza', '10391111', 'josuepc012899@gmail.com', 'Sucre', 0, '2017-09-01 20:24:19', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (696, 'gissel', 'leon', '7568353', 'gissel320_alex_a@gmail.com', 'Sucre', 0, '2017-09-01 20:36:03', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (697, 'Samuel', 'Meguillanes Javier', '7513413', 'sak.aceen@gmail.com', 'Sucre', 0, '2017-09-01 20:49:58', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
-(698, 'Felix', 'Flores Yampara', '5663573', 'felix.antonio.flores.26@gmail.com', 'Sucre', 1, '2017-09-01 20:56:54', 'PARTICIPANTE', '2017-09-04 00:39:24', 1, 0, 0),
+(698, 'Felix', 'Flores Yampara', '5663573', 'felix.antonio.flores.26@gmail.com', 'Sucre', 1, '2017-09-01 20:56:54', 'PARTICIPANTE', '2017-09-04 00:39:24', 1, 1, 0),
 (699, 'Diego Armando', 'Párraga Ortuste', '7480586', 'razor_d13@hotmail.es', 'Sucre', 0, '2017-09-01 21:05:15', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (700, 'ADRIANA', 'MORODIAS AYARACHI', '8522746', 'adrianatuamix@gmail.com', 'Potosí', 0, '2017-09-01 21:10:46', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (701, 'Arnold', 'Herrera Chambi', '8505997', 'arn_14_@hotmail.com', 'Sucre', 0, '2017-09-01 21:12:20', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
@@ -1731,7 +1753,7 @@ INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `r
 (719, 'mijael deymar', 'mamani bacarreza', '12515236', 'deymarbacarreza@gmail.com', 'La Paz', 0, '2017-09-01 23:45:22', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (720, 'Alvaro Daniel', 'Rocha Rocha', '10328231', 'alvarodaniel_r@hotmail.com', 'Sucre', 0, '2017-09-01 23:48:03', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (721, 'Dracen Kevin', 'Romero Rivero', '6661000', 'Drake_dkrr_15_@hotmail.com', 'Potosí', 0, '2017-09-02 00:15:30', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
-(722, 'Cristian Manuel', 'Solis Guerra', '10401716', 'manuel96solis@gmail.com', 'Sucre', 0, '2017-09-02 00:20:50', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
+(722, 'Cristian Manuel', 'Solis Guerra', '10401716', 'manuel96solis@gmail.com', 'Sucre', 0, '2017-09-02 00:20:50', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 1),
 (723, 'William Elmer', 'Ortiz Méndez', '10342220', 'william.e.ortiz.mendez@gmail.com', 'Sucre', 0, '2017-09-02 00:46:12', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (724, 'José Guadalupe', 'Calizaya Mamani', '8654276', 'jcalizaya9@gmail.com', 'Sucre', 0, '2017-09-02 00:48:49', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (725, 'Brenda Kely', 'Mita Martinez', '10394573', 'brendakelymita@gmail.com', 'chuquisaca', 0, '2017-09-02 01:07:29', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
@@ -1960,7 +1982,79 @@ INSERT INTO `user_aud` (`id`, `id_user`, `name`, `last_name`, `ci`, `email`, `ci
 (766, 142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', 1, '2017-09-04 04:00:00', 'UPDATED', '2017-09-07 10:43:19'),
 (767, 138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 1, '2017-08-15 00:42:42', 'PARTICIPANTE', 1, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 10:43:22'),
 (768, 133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', 1, '2017-09-20 04:00:00', 'UPDATED', '2017-09-07 10:43:26'),
-(769, 142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', 2, '2017-09-04 04:00:00', 'UPDATED', '2017-09-07 10:45:09');
+(769, 142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', 2, '2017-09-04 04:00:00', 'UPDATED', '2017-09-07 10:45:09'),
+(770, 142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', 2, '2017-08-04 04:00:00', 'UPDATED', '2017-09-07 11:26:54'),
+(771, 145, 'Alejandro', 'Mancilla', '8359856', 'alejandro-mancilla@outlook.com', 'La Paz', 1, '2017-08-15 02:21:07', 'PARTICIPANTE', 2, '2017-09-01 04:00:00', 'UPDATED', '2017-09-07 11:26:54'),
+(772, 698, 'Felix', 'Flores Yampara', '5663573', 'felix.antonio.flores.26@gmail.com', 'Sucre', 1, '2017-09-01 20:56:54', 'PARTICIPANTE', 1, '2017-09-04 00:39:24', 'UPDATED', '2017-09-07 11:26:54'),
+(773, 143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', 1, '2017-09-05 04:00:00', 'UPDATED', '2017-09-07 11:26:54'),
+(774, 144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', 1, '2017-09-07 04:00:00', 'UPDATED', '2017-09-07 11:26:54'),
+(775, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:26:54'),
+(776, 133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', 2, '2017-09-20 04:00:00', 'UPDATED', '2017-09-07 11:26:54'),
+(777, 137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', 1, '2017-09-21 04:00:00', 'UPDATED', '2017-09-07 11:26:54'),
+(778, 138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 1, '2017-08-15 00:42:42', 'PARTICIPANTE', 2, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:26:54'),
+(779, 139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', 1, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:26:54'),
+(780, 140, 'Tatiana Germania', 'Chumacero Garcia', '4763971', 'chumacerotatiana@gmail.com', 'La Paz', 1, '2017-08-15 01:47:33', 'PARTICIPANTE', 1, '2017-09-23 04:00:00', 'UPDATED', '2017-09-07 11:27:25'),
+(781, 141, 'VICTOR ALEJANDRO', 'ALCON CONDORI', '6964035', 'v.alejandro.alcon.c@gmail.com', 'La Paz', 1, '2017-08-15 01:48:37', 'PARTICIPANTE', 1, '2017-09-24 04:00:00', 'UPDATED', '2017-09-07 11:27:25'),
+(782, 145, 'Alejandro', 'Mancilla', '8359856', 'alejandro-mancilla@outlook.com', 'La Paz', 1, '2017-08-15 02:21:07', 'PARTICIPANTE', 2, '2017-09-01 04:00:00', 'UPDATED', '2017-09-07 11:29:08'),
+(783, 144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', 1, '2017-09-07 04:00:00', 'UPDATED', '2017-09-07 11:29:11'),
+(784, 143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', 1, '2017-09-05 04:00:00', 'UPDATED', '2017-09-07 11:29:14'),
+(785, 142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', 2, '2017-08-04 04:00:00', 'UPDATED', '2017-09-07 11:29:16'),
+(786, 141, 'VICTOR ALEJANDRO', 'ALCON CONDORI', '6964035', 'v.alejandro.alcon.c@gmail.com', 'La Paz', 1, '2017-08-15 01:48:37', 'PARTICIPANTE', 1, '2017-09-24 04:00:00', 'UPDATED', '2017-09-07 11:29:18'),
+(787, 140, 'Tatiana Germania', 'Chumacero Garcia', '4763971', 'chumacerotatiana@gmail.com', 'La Paz', 1, '2017-08-15 01:47:33', 'PARTICIPANTE', 1, '2017-09-23 04:00:00', 'UPDATED', '2017-09-07 11:29:21'),
+(788, 139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', 1, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:29:23'),
+(789, 138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 1, '2017-08-15 00:42:42', 'PARTICIPANTE', 2, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:29:27'),
+(790, 137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', 1, '2017-09-21 04:00:00', 'UPDATED', '2017-09-07 11:29:30'),
+(791, 133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', 2, '2017-09-20 04:00:00', 'UPDATED', '2017-09-07 11:29:33'),
+(792, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:29:35'),
+(793, 142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', 2, '2017-08-04 04:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(794, 145, 'Alejandro', 'Mancilla', '8359856', 'alejandro-mancilla@outlook.com', 'La Paz', 1, '2017-08-15 02:21:07', 'PARTICIPANTE', 2, '2017-09-01 04:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(795, 143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', 1, '2017-09-05 04:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(796, 144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', 1, '2017-09-07 04:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(797, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(798, 133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', 2, '2017-09-20 04:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(799, 137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', 1, '2017-09-21 04:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(800, 138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 1, '2017-08-15 00:42:42', 'PARTICIPANTE', 2, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(801, 139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', 1, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(802, 140, 'Tatiana Germania', 'Chumacero Garcia', '4763971', 'chumacerotatiana@gmail.com', 'La Paz', 1, '2017-08-15 01:47:33', 'PARTICIPANTE', 1, '2017-09-23 04:00:00', 'UPDATED', '2017-09-07 11:30:50'),
+(803, 698, 'Felix', 'Flores Yampara', '5663573', 'felix.antonio.flores.26@gmail.com', 'Sucre', 1, '2017-09-01 20:56:54', 'PARTICIPANTE', 1, '2017-09-04 00:39:24', 'UPDATED', '2017-09-07 11:31:49'),
+(804, 145, 'Alejandro', 'Mancilla', '8359856', 'alejandro-mancilla@outlook.com', 'La Paz', 1, '2017-08-15 02:21:07', 'PARTICIPANTE', 2, '2017-09-01 04:00:00', 'UPDATED', '2017-09-07 11:31:51'),
+(805, 144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', 1, '2017-09-07 04:00:00', 'UPDATED', '2017-09-07 11:31:53'),
+(806, 143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', 1, '2017-09-05 04:00:00', 'UPDATED', '2017-09-07 11:31:56'),
+(807, 142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', 2, '2017-08-04 04:00:00', 'UPDATED', '2017-09-07 11:31:58'),
+(808, 140, 'Tatiana Germania', 'Chumacero Garcia', '4763971', 'chumacerotatiana@gmail.com', 'La Paz', 1, '2017-08-15 01:47:33', 'PARTICIPANTE', 1, '2017-09-23 04:00:00', 'UPDATED', '2017-09-07 11:32:00'),
+(809, 139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', 1, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:32:02'),
+(810, 138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 1, '2017-08-15 00:42:42', 'PARTICIPANTE', 2, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:32:05'),
+(811, 137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', 1, '2017-09-21 04:00:00', 'UPDATED', '2017-09-07 11:32:07'),
+(812, 133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', 2, '2017-09-20 04:00:00', 'UPDATED', '2017-09-07 11:32:10'),
+(813, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:32:12'),
+(814, 142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', 2, '2017-08-04 04:00:00', 'UPDATED', '2017-09-07 11:32:28'),
+(815, 145, 'Alejandro', 'Mancilla', '8359856', 'alejandro-mancilla@outlook.com', 'La Paz', 1, '2017-08-15 02:21:07', 'PARTICIPANTE', 2, '2017-09-01 04:00:00', 'UPDATED', '2017-09-07 11:32:28'),
+(816, 698, 'Felix', 'Flores Yampara', '5663573', 'felix.antonio.flores.26@gmail.com', 'Sucre', 1, '2017-09-01 20:56:54', 'PARTICIPANTE', 1, '2017-09-04 00:39:24', 'UPDATED', '2017-09-07 11:32:28'),
+(817, 143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', 1, '2017-09-05 04:00:00', 'UPDATED', '2017-09-07 11:32:28'),
+(818, 144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', 1, '2017-09-07 04:00:00', 'UPDATED', '2017-09-07 11:32:28'),
+(819, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:32:28'),
+(820, 133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', 2, '2017-09-20 04:00:00', 'UPDATED', '2017-09-07 11:32:28'),
+(821, 137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', 1, '2017-09-21 04:00:00', 'UPDATED', '2017-09-07 11:32:28'),
+(822, 138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 1, '2017-08-15 00:42:42', 'PARTICIPANTE', 2, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:32:28'),
+(823, 139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', 1, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 11:32:28'),
+(824, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:40:04'),
+(825, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:51:36'),
+(826, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:52:12'),
+(827, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:52:20'),
+(828, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:52:26'),
+(829, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:52:27'),
+(830, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:53:30'),
+(831, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:53:33'),
+(832, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:57:03'),
+(833, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:57:09'),
+(834, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:57:10'),
+(835, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 11:57:11'),
+(836, 133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', 2, '2017-09-20 04:00:00', 'UPDATED', '2017-09-07 11:59:12'),
+(837, 722, 'Cristian Manuel', 'Solis Guerra', '10401716', 'manuel96solis@gmail.com', 'Sucre', 0, '2017-09-02 00:20:50', 'PARTICIPANTE', 0, '0000-00-00 00:00:00', 'UPDATED', '2017-09-07 12:01:23'),
+(838, 722, 'Cristian Manuel', 'Solis Guerra', '10401716', 'manuel96solis@gmail.com', 'Sucre', 0, '2017-09-02 00:20:50', 'PARTICIPANTE', 0, '0000-00-00 00:00:00', 'UPDATED', '2017-09-07 12:02:37'),
+(839, 133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', 2, '2017-09-20 04:00:00', 'UPDATED', '2017-09-07 12:02:39'),
+(840, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 12:02:42'),
+(841, 722, 'Cristian Manuel', 'Solis Guerra', '10401716', 'manuel96solis@gmail.com', 'Sucre', 0, '2017-09-02 00:20:50', 'PARTICIPANTE', 0, '0000-00-00 00:00:00', 'UPDATED', '2017-09-07 12:02:49');
 
 --
 -- Índices para tablas volcadas
@@ -2086,7 +2180,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `user_aud`
 --
 ALTER TABLE `user_aud`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=770;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=842;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
