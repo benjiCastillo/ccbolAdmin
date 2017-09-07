@@ -229,8 +229,8 @@ class  UserModel
 		return $res;			 
 	}
 
-	public function print($data){
-		$this->mysqli->multi_query(" CALL print('".$data['_id_admin1']."',
+	public function printUsers($data){
+		$this->mysqli->multi_query(" CALL printUsers('".$data['_id_admin1']."',
 												'".$data['_id_admin2']."')");
 		$res = $this->mysqli->store_result();
 		while($fila = $res->fetch_assoc()){

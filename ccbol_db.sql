@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-09-2017 a las 14:10:10
+-- Tiempo de generación: 07-09-2017 a las 14:31:35
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -102,14 +102,6 @@ DECLARE _started_time TIMESTAMP;
     SELECT 'Sesión Finalizada' AS respuesta, 'not' as error;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `print` (IN `_id_admin1` INT, IN `_id_admin2` INT)  BEGIN
-	IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin1 OR id=_id_admin2))THEN
-		SELECT 'not' as error, name, last_name, cargo as cantidad FROM user WHERE (id_admin=_id_admin1 OR id_admin=_id_admin2) AND (paid=1) AND (printed=0) AND (printed_check=0) ORDER BY inscription_date ASC LIMIT 10;
-	ELSE
-		SELECT 'yes' as error, 'Error, Administrador no encontrado' as respuesta;
-	END IF;
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `printChecked` (IN `_id_user` INT)  BEGIN
 	IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
 		IF(SELECT EXISTS(SELECT * FROM user WHERE printed_check=0 AND id=_id_user))THEN
@@ -136,6 +128,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `printUpdate` (IN `_id_admin1` INT, 
 		UPDATE user SET printed=1 WHERE ((id_admin=_id_admin1 OR id_admin=_id_admin2) AND (paid=1) AND (printed=0) AND (printed_check=0)) ORDER BY inscription_date ASC LIMIT 10;
 		SELECT 'not' as error, 'Registros impresos correctamente';
     ELSE
+		SELECT 'yes' as error, 'Error, Administrador no encontrado' as respuesta;
+	END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `printUsers` (IN `_id_admin1` INT, IN `_id_admin2` INT)  BEGIN
+	IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin1 OR id=_id_admin2))THEN
+		SELECT 'not' as error, name, last_name, cargo as cantidad FROM user WHERE (id_admin=_id_admin1 OR id_admin=_id_admin2) AND (paid=1) AND (printed=0) AND (printed_check=0) ORDER BY inscription_date ASC LIMIT 10;
+	ELSE
 		SELECT 'yes' as error, 'Error, Administrador no encontrado' as respuesta;
 	END IF;
 END$$
@@ -1172,16 +1172,16 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `registration_date`, `cargo`, `inscription_date`, `id_admin`, `printed`, `printed_check`) VALUES
-(132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', '2017-09-19 11:00:00', 1, 1, 0),
+(132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', '2017-09-19 11:00:00', 1, 0, 0),
 (133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', '2017-09-20 04:00:00', 2, 1, 0),
-(137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', '2017-09-21 04:00:00', 1, 1, 0),
+(137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', '2017-09-21 04:00:00', 1, 0, 0),
 (138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 1, '2017-08-15 00:42:42', 'PARTICIPANTE', '2017-09-22 04:00:00', 2, 1, 0),
-(139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', '2017-09-22 04:00:00', 1, 1, 0),
+(139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', '2017-09-22 04:00:00', 1, 0, 0),
 (140, 'Tatiana Germania', 'Chumacero Garcia', '4763971', 'chumacerotatiana@gmail.com', 'La Paz', 1, '2017-08-15 01:47:33', 'PARTICIPANTE', '2017-09-23 04:00:00', 1, 0, 0),
 (141, 'VICTOR ALEJANDRO', 'ALCON CONDORI', '6964035', 'v.alejandro.alcon.c@gmail.com', 'La Paz', 1, '2017-08-15 01:48:37', 'PARTICIPANTE', '2017-09-24 04:00:00', 1, 0, 0),
 (142, 'Cristhian Mauricio', 'Flores Vargas', '8352041', 'flovarmau@gmail.com', 'La Paz', 1, '2017-08-15 01:59:16', 'PARTICIPANTE', '2017-08-04 04:00:00', 2, 1, 0),
-(143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', '2017-09-05 04:00:00', 1, 1, 0),
-(144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', '2017-09-07 04:00:00', 1, 1, 0),
+(143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', '2017-09-05 04:00:00', 1, 0, 0),
+(144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', '2017-09-07 04:00:00', 1, 0, 0),
 (145, 'Alejandro', 'Mancilla', '8359856', 'alejandro-mancilla@outlook.com', 'La Paz', 1, '2017-08-15 02:21:07', 'PARTICIPANTE', '2017-09-01 04:00:00', 2, 1, 0),
 (146, 'Maribel Maritza', 'Calle Averanga', '9241807', 'maryel.2mary@gmail.com', 'La Paz', 0, '2017-08-15 02:55:37', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (147, 'Miguel Demetrio', 'Oropeza Quisbert', '9879793', 'demetrio947@yahoo.es', 'La Paz', 0, '2017-08-15 02:56:49', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
@@ -1729,7 +1729,7 @@ INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `r
 (695, 'Josue', 'Peducasse Carranza', '10391111', 'josuepc012899@gmail.com', 'Sucre', 0, '2017-09-01 20:24:19', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (696, 'gissel', 'leon', '7568353', 'gissel320_alex_a@gmail.com', 'Sucre', 0, '2017-09-01 20:36:03', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (697, 'Samuel', 'Meguillanes Javier', '7513413', 'sak.aceen@gmail.com', 'Sucre', 0, '2017-09-01 20:49:58', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
-(698, 'Felix', 'Flores Yampara', '5663573', 'felix.antonio.flores.26@gmail.com', 'Sucre', 1, '2017-09-01 20:56:54', 'PARTICIPANTE', '2017-09-04 00:39:24', 1, 1, 0),
+(698, 'Felix', 'Flores Yampara', '5663573', 'felix.antonio.flores.26@gmail.com', 'Sucre', 1, '2017-09-01 20:56:54', 'PARTICIPANTE', '2017-09-04 00:39:24', 1, 0, 0),
 (699, 'Diego Armando', 'Párraga Ortuste', '7480586', 'razor_d13@hotmail.es', 'Sucre', 0, '2017-09-01 21:05:15', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (700, 'ADRIANA', 'MORODIAS AYARACHI', '8522746', 'adrianatuamix@gmail.com', 'Potosí', 0, '2017-09-01 21:10:46', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
 (701, 'Arnold', 'Herrera Chambi', '8505997', 'arn_14_@hotmail.com', 'Sucre', 0, '2017-09-01 21:12:20', 'PARTICIPANTE', '0000-00-00 00:00:00', 0, 0, 0),
@@ -2054,7 +2054,13 @@ INSERT INTO `user_aud` (`id`, `id_user`, `name`, `last_name`, `ci`, `email`, `ci
 (838, 722, 'Cristian Manuel', 'Solis Guerra', '10401716', 'manuel96solis@gmail.com', 'Sucre', 0, '2017-09-02 00:20:50', 'PARTICIPANTE', 0, '0000-00-00 00:00:00', 'UPDATED', '2017-09-07 12:02:37'),
 (839, 133, 'jose', 'chirinos', '1111555', '11111155', '1111', 1, '2017-08-14 22:20:04', 'PARTICIPANTE', 2, '2017-09-20 04:00:00', 'UPDATED', '2017-09-07 12:02:39'),
 (840, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 12:02:42'),
-(841, 722, 'Cristian Manuel', 'Solis Guerra', '10401716', 'manuel96solis@gmail.com', 'Sucre', 0, '2017-09-02 00:20:50', 'PARTICIPANTE', 0, '0000-00-00 00:00:00', 'UPDATED', '2017-09-07 12:02:49');
+(841, 722, 'Cristian Manuel', 'Solis Guerra', '10401716', 'manuel96solis@gmail.com', 'Sucre', 0, '2017-09-02 00:20:50', 'PARTICIPANTE', 0, '0000-00-00 00:00:00', 'UPDATED', '2017-09-07 12:02:49'),
+(842, 143, 'Pamela Sesi', 'Uruchi Condori', '6966987 LP', 'pamelauruchi1@gmail.com', 'La Paz', 1, '2017-08-15 02:00:15', 'PARTICIPANTE', 1, '2017-09-05 04:00:00', 'UPDATED', '2017-09-07 12:31:08'),
+(843, 144, 'Marisabel', 'Condori Cano', '10928881 Lp', 'mari.17ymy@gmail.com', 'La Paz', 1, '2017-08-15 02:17:08', 'PARTICIPANTE', 1, '2017-09-07 04:00:00', 'UPDATED', '2017-09-07 12:31:10'),
+(844, 698, 'Felix', 'Flores Yampara', '5663573', 'felix.antonio.flores.26@gmail.com', 'Sucre', 1, '2017-09-01 20:56:54', 'PARTICIPANTE', 1, '2017-09-04 00:39:24', 'UPDATED', '2017-09-07 12:31:13'),
+(845, 139, 'Jesus Juan Carlos', 'Maraza Vigabriel', '8321156', 'carlosmaraza@gmail.com', 'La Paz', 1, '2017-08-15 01:43:49', 'PARTICIPANTE', 1, '2017-09-22 04:00:00', 'UPDATED', '2017-09-07 12:31:15'),
+(846, 137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 1, '2017-08-15 00:18:35', 'PARTICIPANTE', 1, '2017-09-21 04:00:00', 'UPDATED', '2017-09-07 12:31:18'),
+(847, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 1, '2017-08-14 19:03:19', 'PARTICIPANTE', 1, '2017-09-19 11:00:00', 'UPDATED', '2017-09-07 12:31:20');
 
 --
 -- Índices para tablas volcadas
@@ -2180,7 +2186,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `user_aud`
 --
 ALTER TABLE `user_aud`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=842;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=848;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

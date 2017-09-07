@@ -52,11 +52,11 @@ $app->group('/user',function(){
 							   );
 			});
 
-	$this->post('/print/',function($req, $res, $args){
+	$this->post('/printUsers/',function($req, $res, $args){
 				
 				return $res->withHeader('Content-type', 'aplication/json')
 						   -> write(
-								json_encode($this->model->User->print($req->getParsedBody()))
+								json_encode($this->model->User->printUsers($req->getParsedBody()))
 				
 							   );
 			});
