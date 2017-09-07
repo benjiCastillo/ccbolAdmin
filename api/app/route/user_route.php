@@ -26,6 +26,14 @@ $app->group('/user',function(){
 				   	);
 	});
 
+	$this->get('/printChecked/{id}',function($req, $res, $args){
+		return $res->withHeader('Content-type', 'aplication/json')
+				   ->write(
+				   		json_encode($this->model->User->printChecked($args['id']))
+				   		
+				   	);
+	});
+
 	$this->get('/listProfessionals/',function($req, $res, $args){
 		return $res->withHeader('Content-type', 'aplication/json')
 				   ->write(
@@ -43,6 +51,33 @@ $app->group('/user',function(){
 		
 							   );
 			});
+
+	$this->post('/print/',function($req, $res, $args){
+				
+				return $res->withHeader('Content-type', 'aplication/json')
+						   -> write(
+								json_encode($this->model->User->print($req->getParsedBody()))
+				
+							   );
+			});
+
+	$this->post('/printCount/',function($req, $res, $args){
+		
+				return $res->withHeader('Content-type', 'aplication/json')
+						   -> write(
+								json_encode($this->model->User->printCount($req->getParsedBody()))
+		
+							   );
+			});
+
+	$this->post('/printUpdate/',function($req, $res, $args){
+				
+				return $res->withHeader('Content-type', 'aplication/json')
+							-> write(
+								json_encode($this->model->User->printUpdate($req->getParsedBody()))
+				
+								);
+					});
 
 	$this->get('/logout/{id}',function($req, $res, $args){
 		return $res->withHeader('Content-type', 'aplication/json')

@@ -218,7 +218,48 @@ class  UserModel
 			mysqli_close($this->mysqli);
 			return $res;					 
 	}
+
+	public function printCount($data){
+		$this->mysqli->multi_query(" CALL printCount('".$data['_id_admin1']."',
+													'".$data['_id_admin2']."')");
+
+		$res = $this->mysqli->store_result();
+		$res = $res->fetch_assoc();
+		mysqli_close($this->mysqli);
+		return $res;			 
+	}
+
+	public function print($data){
+		$this->mysqli->multi_query(" CALL print('".$data['_id_admin1']."',
+												'".$data['_id_admin2']."')");
+		$res = $this->mysqli->store_result();
+		while($fila = $res->fetch_assoc()){
+			$arreglo[] = $fila;
+		}
+		$res = $arreglo;
+		mysqli_close($this->mysqli);
+		$res = array("message"=>$res,"response"=>true);
+		return $res;					 
+	}
+
+	public function printUpdate($data){
+		$this->mysqli->multi_query(" CALL printUpdate('".$data['_id_admin1']."',
+													'".$data['_id_admin2']."')");
+
+		$res = $this->mysqli->store_result();
+		$res = $res->fetch_assoc();
+		mysqli_close($this->mysqli);
+		return $res;			 
+	}
 	
+	public function printChecked($data){
+		$data = $this->security->desencriptarID($data);
+		$this->mysqli->multi_query(" CALL printChecked(".$data.")");
+		$res = $this->mysqli->store_result();
+		$res = $res->fetch_assoc();
+		mysqli_close($this->mysqli);
+		return $res;				 
+	}
 	//actualizar
 	public function update($data, $id){
 
