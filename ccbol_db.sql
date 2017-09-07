@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-09-2017 a las 14:31:35
+-- Tiempo de generación: 07-09-2017 a las 14:46:12
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -134,7 +134,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `printUsers` (IN `_id_admin1` INT, IN `_id_admin2` INT)  BEGIN
 	IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin1 OR id=_id_admin2))THEN
-		SELECT 'not' as error, name, last_name, cargo as cantidad FROM user WHERE (id_admin=_id_admin1 OR id_admin=_id_admin2) AND (paid=1) AND (printed=0) AND (printed_check=0) ORDER BY inscription_date ASC LIMIT 10;
+		SELECT 'not' as error, name, last_name, cargo, city FROM user WHERE (id_admin=_id_admin1 OR id_admin=_id_admin2) AND (paid=1) AND (printed=0) AND (printed_check=0) ORDER BY inscription_date ASC LIMIT 10;
 	ELSE
 		SELECT 'yes' as error, 'Error, Administrador no encontrado' as respuesta;
 	END IF;
