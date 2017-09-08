@@ -81,7 +81,7 @@ class  UserModel
 		if($res[1]=="yes")
 		$res = array("message"=>$res[0], "error"=>$res[1], "response"=>true);
 		else
-		$res = array("message"=>$res[0], "id"=>$res[2], "error"=>$res[1], "response"=>true);
+		$res = array("message"=>$res[0], "id"=>$this->security->encriptar($res[2]), "error"=>$res[1], "response"=>true);
 		return $res;	
 	}
 
@@ -132,7 +132,7 @@ class  UserModel
 		if($res[1]=="yes")
 			$res = array("message"=>$res[0], "error"=>$res[1], "response"=>true);
 		else
-			$res = array("message"=>$res[0], "id"=>$res[2], "error"=>$res[1], "response"=>true);
+			$res = array("message"=>$res[0], "id"=>$this->security->encriptar($res[2]), "error"=>$res[1], "response"=>true);
 		return $res;
 	}
 

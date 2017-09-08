@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-09-2017 a las 18:18:56
+-- Tiempo de generación: 08-09-2017 a las 18:48:54
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -36,7 +36,7 @@ DECLARE _id_admin INT;
     END IF;
 END$$
 
-CREATE DEFINER=`grupociencia`@`localhost` PROCEDURE `insertProfessional` (IN `_name` VARCHAR(50), IN `_last_name` VARCHAR(80), IN `_ci` VARCHAR(13), IN `_email` VARCHAR(50), IN `_city` VARCHAR(35), IN `_professional_degree` VARCHAR(75))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertProfessional` (IN `_name` VARCHAR(50), IN `_last_name` VARCHAR(80), IN `_ci` VARCHAR(13), IN `_email` VARCHAR(50), IN `_city` VARCHAR(35), IN `_professional_degree` VARCHAR(75))  BEGIN
 DECLARE _id_user INT;
 	IF (SELECT EXISTS(SELECT * FROM user WHERE ci=_ci))THEN
 		SELECT 'Ha ocurrido un error, el CI ya está registrado, revisa este dato porfavor.' AS respuesta, 'yes' AS error;
@@ -52,7 +52,7 @@ DECLARE _id_user INT;
 	END IF;
 END$$
 
-CREATE DEFINER=`grupociencia`@`localhost` PROCEDURE `insertStudent` (IN `_name` VARCHAR(50), IN `_last_name` VARCHAR(80), IN `_ci` VARCHAR(13), IN `_email` VARCHAR(50), IN `_city` VARCHAR(35), IN `_college` VARCHAR(75), IN `_career` VARCHAR(75))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertStudent` (IN `_name` VARCHAR(50), IN `_last_name` VARCHAR(80), IN `_ci` VARCHAR(13), IN `_email` VARCHAR(50), IN `_city` VARCHAR(35), IN `_college` VARCHAR(75), IN `_career` VARCHAR(75))  BEGIN
 DECLARE _id_user INT;
 	IF (SELECT EXISTS(SELECT * FROM user WHERE ci=_ci))THEN
 		SELECT 'Ha ocurrido un error, el CI ya está registrado, revisa este dato porfavor.' AS respuesta, 'yes' AS error;
@@ -1212,7 +1212,8 @@ INSERT INTO `student` (`id_user`, `college`, `career`) VALUES
 (760, '(UMSA) Universidad Mayor de San Andrés', 'Informatica'),
 (761, '(USFX) Universidad Mayor de San Francisco Xavier', 'Ing. de Telecomunicaciones'),
 (762, '(UAGRM) Universidad Autónoma Gabriel René Moreno', 'Ing. de Sistemas'),
-(763, '(UATF) Universidad Autónoma Tomás Frías', 'Ing. de Sistemas');
+(763, '(UATF) Universidad Autónoma Tomás Frías', 'Ing. de Sistemas'),
+(765, '1', '11111');
 
 --
 -- Disparadores `student`
@@ -1259,7 +1260,10 @@ INSERT INTO `student_aud` (`id`, `id_user`, `college`, `career`, `operation`, `d
 (7, 132, '(UMSS) Universidad Mayor de San Simón', 'Ing. de Sistemas', 'UPDATED', '2017-09-03 23:09:39'),
 (8, 698, '(USFX) Universidad Mayor de San Francisco Xavier', 'Ing. de Sistemas', 'UPDATED', '2017-09-03 23:19:24'),
 (9, 698, '(USFX) Universidad Mayor de San Francisco Xavier', 'Ing. de Sistemas', 'UPDATED', '2017-09-03 23:22:40'),
-(10, 698, '(USFX) Universidad Mayor de San Francisco Xavier', 'Ing. de Sistemas', 'UPDATED', '2017-09-03 23:25:01');
+(10, 698, '(USFX) Universidad Mayor de San Francisco Xavier', 'Ing. de Sistemas', 'UPDATED', '2017-09-03 23:25:01'),
+(11, 764, '1', '11111', 'INSERTED', '2017-09-08 16:46:31'),
+(12, 764, '1', '11111', 'DELETED', '2017-09-08 16:48:03'),
+(13, 765, '1', '11111', 'INSERTED', '2017-09-08 16:48:09');
 
 -- --------------------------------------------------------
 
@@ -1276,7 +1280,7 @@ CREATE TABLE `user` (
   `city` varchar(35) COLLATE utf8_spanish_ci NOT NULL,
   `paid` tinyint(1) NOT NULL DEFAULT '0',
   `registration_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `cargo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `cargo` varchar(20) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'PARTICIPANTE',
   `inscription_date` timestamp NULL DEFAULT NULL,
   `id_admin` int(11) NOT NULL,
   `printed` tinyint(1) NOT NULL,
@@ -1288,7 +1292,6 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `registration_date`, `cargo`, `inscription_date`, `id_admin`, `printed`, `printed_check`) VALUES
-(132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 0, '2017-08-14 19:03:19', 'PARTICIPANTE', '2017-09-07 22:13:01', 0, 0, 0),
 (133, 'jose', 'chirinos', '1111555', '11111155', '1111', 0, '2017-08-14 22:20:04', 'PARTICIPANTE', '2017-09-07 22:28:32', 0, 0, 0),
 (137, 'Diana Vanessa', 'Silva Arando', '7071807 LP', 'dianavanessa.dvsa@gmail.com', 'La Paz', 0, '2017-08-15 00:18:35', 'PARTICIPANTE', '2017-09-07 22:36:47', 0, 0, 0),
 (138, 'Alvaro David', 'Copa', '6901086', 'copa730@gmail.com', 'La Paz', 0, '2017-08-15 00:42:42', 'PARTICIPANTE', NULL, 0, 0, 0),
@@ -1634,9 +1637,9 @@ INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `r
 (480, 'Guillermo', 'Tola monataño', '8508696', 'guichi_1000@hotmail.com', 'Potosí', 0, '2017-08-29 20:50:11', 'PARTICIPANTE', NULL, 0, 0, 0),
 (481, 'Omar Gerardo', 'Flores Diaz', '12764917', 'dgerardo664@gmail.com', 'La Paz', 0, '2017-08-29 21:24:04', 'PARTICIPANTE', NULL, 0, 0, 0),
 (482, 'Juan Pablo', 'Estrada cuno', '8617852', 'bambino_3008@hotmail.com', 'Potosi', 0, '2017-08-29 21:25:56', 'PARTICIPANTE', NULL, 0, 0, 0),
-(483, 'Jose Vladimir', 'Marquéz', '4006608', 'jm9641980@gmail.com', 'Potosi', 0, '2017-08-29 21:28:13', 'PARTICIPANTE', NULL, 0, 0, 0);
+(483, 'Jose Vladimir', 'Marquéz', '4006608', 'jm9641980@gmail.com', 'Potosi', 0, '2017-08-29 21:28:13', 'PARTICIPANTE', NULL, 0, 0, 0),
+(484, 'Jhovanna', 'Quispe arriaga', '8505358-1M', 'gatiposa@gmail.com', 'Potosi', 0, '2017-08-29 21:34:14', 'PARTICIPANTE', NULL, 0, 0, 0);
 INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `registration_date`, `cargo`, `inscription_date`, `id_admin`, `printed`, `printed_check`) VALUES
-(484, 'Jhovanna', 'Quispe arriaga', '8505358-1M', 'gatiposa@gmail.com', 'Potosi', 0, '2017-08-29 21:34:14', 'PARTICIPANTE', NULL, 0, 0, 0),
 (485, 'Reina', 'Huanaco Choque', '10536222', 'reina_guay18@hotmail.com', 'Potosi', 0, '2017-08-29 21:34:19', 'PARTICIPANTE', NULL, 0, 0, 0),
 (486, 'Mario Edson', 'Pimentel Romero', '10340797', 'marioedsopimentel757887@gmail.com', 'Sucre', 0, '2017-08-29 23:10:08', 'PARTICIPANTE', NULL, 0, 0, 0),
 (487, 'Haen Mauricio', 'Mita Gumiel', '10349698', 'haen-@live.com', 'Sucre', 0, '2017-08-29 23:26:40', 'PARTICIPANTE', NULL, 0, 0, 0),
@@ -1910,7 +1913,8 @@ INSERT INTO `user` (`id`, `name`, `last_name`, `ci`, `email`, `city`, `paid`, `r
 (760, 'Damaris Laura', 'Ayala Pari', '12864015', 'damarisayala02@gmail.com', 'La paz', 0, '2017-09-03 04:05:04', 'PARTICIPANTE', NULL, 0, 0, 0),
 (761, 'Andres Emilio', 'Gonzales Arcienega', '10349158', 'madshotqq8@gmail.com', 'Sucre', 0, '2017-09-03 12:19:14', 'PARTICIPANTE', NULL, 0, 0, 0),
 (762, 'Nector Antonio', 'Carita Valdiviezo', '9795706', 'nector@mozillabolivia.org', 'Santa Cruz de la Sierra', 0, '2017-09-03 14:54:36', 'PARTICIPANTE', NULL, 0, 0, 0),
-(763, 'Ramiro Edgar', 'Cayhuara Vargas', '5130777 Pt.', 'simar.edge24.amistad@gmail.com', 'Potosí', 0, '2017-09-03 15:04:03', 'PARTICIPANTE', NULL, 0, 0, 0);
+(763, 'Ramiro Edgar', 'Cayhuara Vargas', '5130777 Pt.', 'simar.edge24.amistad@gmail.com', 'Potosí', 0, '2017-09-03 15:04:03', 'PARTICIPANTE', NULL, 0, 0, 0),
+(765, 'jose', 'chirinos', '11115jj', '111jj', '1111', 0, '2017-09-08 16:48:09', 'PARTICIPANTE', NULL, 0, 0, 0);
 
 --
 -- Disparadores `user`
@@ -2935,7 +2939,11 @@ INSERT INTO `user_aud` (`id`, `id_user`, `name`, `last_name`, `ci`, `email`, `ci
 (1600, 158, 'Alvaro Ariel', 'Martínez Mancilla', '11109097', 'alvaro_dudutex@outlook.es', 'La Paz', 0, '2017-08-15 15:04:44', 'PARTICIPANTE', 1, '2017-09-07 22:37:37', 'UPDATED', '2017-09-08 16:11:40'),
 (1601, 159, 'Jose Luis', 'Quisbert Quisbert', '6992211', 'jose.luis.quisbert@gmail.com', 'La Paz', 0, '2017-08-15 15:06:40', 'PARTICIPANTE', 2, '2017-09-07 22:37:43', 'UPDATED', '2017-09-08 16:11:41'),
 (1602, 160, 'Alvaro', 'Perales Lopez', '4911089', 'aplotomamos@gmail.com', 'La Paz', 0, '2017-08-15 15:10:07', 'PARTICIPANTE', 2, '2017-09-07 22:38:03', 'UPDATED', '2017-09-08 16:11:42'),
-(1603, 164, 'Juan carlos', 'Gallardo Jiménez', '2637323 lp', 'jcgj.gallardo@gmail.com', 'Cobija', 0, '2017-08-15 15:28:00', 'PARTICIPANTE', 1, '2017-09-07 22:47:59', 'UPDATED', '2017-09-08 16:11:44');
+(1603, 164, 'Juan carlos', 'Gallardo Jiménez', '2637323 lp', 'jcgj.gallardo@gmail.com', 'Cobija', 0, '2017-08-15 15:28:00', 'PARTICIPANTE', 1, '2017-09-07 22:47:59', 'UPDATED', '2017-09-08 16:11:44'),
+(1604, 132, 'aaa', 'aaaa', 'aaaa', 'aaaa', 'aaaa', 0, '2017-08-14 19:03:19', 'PARTICIPANTE', 0, '2017-09-07 22:13:01', 'DELETED', '2017-09-08 16:25:23'),
+(1605, 764, 'jose', 'chirinos', '11115jj', '111jj', '1111', 0, '2017-09-08 16:46:31', '', 0, '2017-09-08 16:46:31', 'INSERTED', '2017-09-08 16:46:31'),
+(1606, 764, 'jose', 'chirinos', '11115jj', '111jj', '1111', 0, '2017-09-08 16:46:31', '', 0, '2017-09-08 16:47:55', 'DELETED', '2017-09-08 16:47:55'),
+(1607, 765, 'jose', 'chirinos', '11115jj', '111jj', '1111', 0, '2017-09-08 16:48:09', 'PARTICIPANTE', 0, '2017-09-08 16:48:09', 'INSERTED', '2017-09-08 16:48:09');
 
 --
 -- Índices para tablas volcadas
@@ -3052,17 +3060,17 @@ ALTER TABLE `professional_aud`
 -- AUTO_INCREMENT de la tabla `student_aud`
 --
 ALTER TABLE `student_aud`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=764;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=766;
 --
 -- AUTO_INCREMENT de la tabla `user_aud`
 --
 ALTER TABLE `user_aud`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1604;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1608;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

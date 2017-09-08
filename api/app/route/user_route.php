@@ -11,13 +11,6 @@ use App\Lib\Response;
 
 $app->group('/user',function(){
 
-	$this->post('/login',function($req, $res, $args){
-		return $res->withHeader('Content-type', 'aplication/json')
-				   ->write(
-				   		json_encode($this->model->User->login($req->getParsedBody()))
-				   	);
-	});
-
 	$this->get('/listStudents/',function($req, $res, $args){
 		return $res->withHeader('Content-type', 'aplication/json')
 				   ->write(
@@ -42,7 +35,39 @@ $app->group('/user',function(){
 				   	);
 	});
 
+	$this->get('/logout/{id}',function($req, $res, $args){
+		return $res->withHeader('Content-type', 'aplication/json')
+				   ->write(
+				   		json_encode($this->model->User->logout($args['id']))
+				   		
+				   	);
+	});
+
+	$this->get('/listUserBc/{id}',function($req, $res, $args){
+		return $res->withHeader('Content-type', 'aplication/json')
+				   ->write(
+				   		json_encode($this->model->User->listUserBc($args['id']))
+				   		
+				   	);
+	});
+
+	$this->get('/listUsersPaid/',function($req, $res, $args){
+		return $res->withHeader('Content-type', 'aplication/json')
+				   ->write(
+				   		json_encode($this->model->User->listUsersPaid())
+				   		
+				   	);
+	});
 	
+	$this->get('/countUser/',function($req, $res, $args){
+		
+				return $res->withHeader('Content-type', 'aplication/json')
+						   -> write(
+								json_encode($this->model->User->countUser())
+		
+							   );
+			});
+
 	$this->post('/userPaidBc/',function($req, $res, $args){
 		
 				return $res->withHeader('Content-type', 'aplication/json')
@@ -79,21 +104,6 @@ $app->group('/user',function(){
 								);
 					});
 
-	$this->get('/logout/{id}',function($req, $res, $args){
-		return $res->withHeader('Content-type', 'aplication/json')
-				   ->write(
-				   		json_encode($this->model->User->logout($args['id']))
-				   		
-				   	);
-	});
-
-	// $this->get('/userPaidCi/{id}',function($req, $res, $args){
-	// 	return $res->withHeader('Content-type', 'aplication/json')
-	// 			   ->write(
-	// 			   		json_encode($this->model->User->userPaidCi($args['id']))
-				   		
-	// 			   	);
-	// });
 
 	$this->post('/userPaidCi/',function($req, $res, $args){
 		
@@ -112,29 +122,6 @@ $app->group('/user',function(){
 								);
 			});
 
-	$this->get('/listUserBc/{id}',function($req, $res, $args){
-		return $res->withHeader('Content-type', 'aplication/json')
-				   ->write(
-				   		json_encode($this->model->User->listUserBc($args['id']))
-				   		
-				   	);
-	});
-
-	$this->get('/listUsersPaid/',function($req, $res, $args){
-		return $res->withHeader('Content-type', 'aplication/json')
-				   ->write(
-				   		json_encode($this->model->User->listUsersPaid())
-				   		
-				   	);
-	});
-
-	// $this->get('/listUserCi/{id}',function($req, $res, $args){
-	// 	return $res->withHeader('Content-type', 'aplication/json')
-	// 			   ->write(
-	// 			   		json_encode($this->model->User->listUserCi($args['id']))
-				   		
-	// 			   	);
-	// });
 
 	$this->post('/listUserCi/',function($req, $res, $args){
 		
@@ -163,14 +150,6 @@ $app->group('/user',function(){
 				   	);
 	});
 
-	$this->get('/countUser/',function($req, $res, $args){
-
-		return $res->withHeader('Content-type', 'aplication/json')
-			       -> write(
-						json_encode($this->model->User->countUser())
-
-				   	);
-	});
 	$this->post('/insertProfessional/',function($req, $res, $args){
 
 		return $res->withHeader('Content-type', 'aplication/json')
@@ -179,6 +158,23 @@ $app->group('/user',function(){
 
 				   	);
 	});
+
+	$this->post('/insertStudentLocal/',function($req, $res, $args){
+		
+		return $res->withHeader('Content-type', 'aplication/json')
+			-> write(
+				json_encode($this->model->User->insertStudentLocal($req->getParsedBody()))
+		
+				);
+			});
+		
+	$this->post('/insertProfessionalLocal/',function($req, $res, $args){
+		
+		return $res->withHeader('Content-type', 'aplication/json')
+			-> write(
+				json_encode($this->model->User->insertProfessionalLocal($req->getParsedBody()))		
+			   );
+			});
 
 	$this->post('/updateUser/',function($req, $res, $args){
 		
