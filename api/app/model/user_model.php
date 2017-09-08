@@ -67,6 +67,25 @@ class  UserModel
 	
 	}
 
+	public function insertStudentLocal($data){
+		$this->mysqli->multi_query("CALL insertStudent('".$data['_name']."',
+															'".$data['_last_name']."',
+															'".$data['_ci']."',
+															'".$data['_email']."',
+															'".$data['_city']."',	
+															'".$data['_college']."',
+															'".$data['_career']."')");
+		$res = $this->mysqli->store_result();
+		$res = $res->fetch_array();
+		mysqli_close($this->mysqli);
+		if($res[1]=="yes")
+		$res = array("message"=>$res[0], "error"=>$res[1], "response"=>true);
+		else
+		$res = array("message"=>$res[0], "id"=>$res[2], "error"=>$res[1], "response"=>true);
+		return $res;	
+	}
+
+
 	public function insertProfessional($data){
 			// importante https://www.phpbb.com/community/viewtopic.php?f=556&t=2404186
 			$recaptchadata =$data['grecaptcharesponse'];	
@@ -97,6 +116,24 @@ class  UserModel
 
 			}
 
+	}
+
+
+	public function insertProfessionalLocal($data){
+		$this->mysqli->multi_query("CALL insertProfessional('".$data['_name']."',
+															'".$data['_last_name']."',
+															'".$data['_ci']."',
+															'".$data['_email']."',
+															'".$data['_city']."',
+															'".$data['_professional_degree']."')");
+		$res = $this->mysqli->store_result();
+		$res = $res->fetch_array();
+		mysqli_close($this->mysqli);
+		if($res[1]=="yes")
+			$res = array("message"=>$res[0], "error"=>$res[1], "response"=>true);
+		else
+			$res = array("message"=>$res[0], "id"=>$res[2], "error"=>$res[1], "response"=>true);
+		return $res;
 	}
 
 	public function listStudents($data){
@@ -260,6 +297,25 @@ class  UserModel
 		mysqli_close($this->mysqli);
 		return $res;				 
 	}
+
+	public function listUsersPaid(){
+		$this->mysqli->multi_query(" CALL listUsersPaid()");
+			$res = $this->mysqli->store_result();
+			while($fila = $res->fetch_assoc()){
+				$arreglo[] = $fila;
+			}
+			$res = $arreglo;
+			mysqli_close($this->mysqli);
+			if($res[0]["error"] == "yes"){
+				$res = array("respuesta"=>$res[0]["respuesta"], "error"=>$res[0]["error"]);
+			}else{
+				$res = array("message"=>$res, "error"=>"not", "response"=>true);
+			}
+			return $res;
+			// $res = array("message"=>$res, "response"=>true);
+			// return $res;		
+	}
+
 	//actualizar
 	public function update($data, $id){
 

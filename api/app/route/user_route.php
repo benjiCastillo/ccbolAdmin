@@ -120,6 +120,14 @@ $app->group('/user',function(){
 				   	);
 	});
 
+	$this->get('/listUsersPaid/',function($req, $res, $args){
+		return $res->withHeader('Content-type', 'aplication/json')
+				   ->write(
+				   		json_encode($this->model->User->listUsersPaid())
+				   		
+				   	);
+	});
+
 	// $this->get('/listUserCi/{id}',function($req, $res, $args){
 	// 	return $res->withHeader('Content-type', 'aplication/json')
 	// 			   ->write(
