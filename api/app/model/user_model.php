@@ -241,6 +241,7 @@ class  UserModel
 		$res = array("message"=>$res,"response"=>true);
 		return $res;					 
 	}
+	
 
 	public function printUpdate($data){
 		$this->mysqli->multi_query(" CALL printUpdate('".$data['_id_admin1']."',
@@ -253,7 +254,6 @@ class  UserModel
 	}
 	
 	public function printChecked($data){
-		$data = $this->security->desencriptarID($data);
 		$this->mysqli->multi_query(" CALL printChecked(".$data.")");
 		$res = $this->mysqli->store_result();
 		$res = $res->fetch_assoc();
