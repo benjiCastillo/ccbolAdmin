@@ -162,8 +162,7 @@ class  UserModel
 
 	public function userPaidBc($data){
 		$this->mysqli->multi_query(" CALL userPaidBc('".$data['_id_user']."',
-													'".$data['_id_admin']."',
-                                                    '".$data['_ocupacion']."')");
+                                                    '".$data['_id_admin']."')");
 
 		$res = $this->mysqli->store_result();
 		$res = $res->fetch_assoc();
