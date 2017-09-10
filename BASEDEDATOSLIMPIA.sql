@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 10-09-2017 a las 23:43:29
+-- Tiempo de generación: 11-09-2017 a las 01:30:07
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -56,6 +56,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `dataUser` (IN `_email` VARCHAR(150)
 	END IF;        
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `datosAdmin` (IN `_id_admin` INT)  BEGIN
+	IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin))THEN
+		SELECT 'not' as error, name,last_name, count, password FROM admin WHERE id=_id_admin;
+    ELSE
+		SELECT 'yes' as error, 'El administrador no existe' AS respuesta;
+    END IF;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertProfessional` (IN `_name` VARCHAR(50), IN `_last_name` VARCHAR(80), IN `_ci` VARCHAR(13), IN `_email` VARCHAR(50), IN `_city` VARCHAR(35), IN `_professional_degree` VARCHAR(75))  BEGIN
 DECLARE _id_user INT;
 	IF (SELECT EXISTS(SELECT * FROM user WHERE ci=_ci))THEN
@@ -86,6 +94,30 @@ DECLARE _id_user INT;
 			SELECT 'Registro exitoso' AS respuesta, 'not' AS error, (SELECT id FROM user WHERE id=@@identity) AS ci;
 		END IF;
 	END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listAdmin` (IN `_id_admin` INT)  BEGIN
+	IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin))THEN
+		SELECT 'not' as error, name,last_name, count, password FROM admin WHERE id=_id_admin;
+    ELSE
+		SELECT 'yes' as error, 'El administrador no existe' AS respuesta;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listDataCi` (IN `_ci` VARCHAR(13))  BEGIN
+	IF(SELECT EXISTS(SELECT * FROM user WHERE ci LIKE concat('%',_ci,'%')))THEN
+		SELECT 'not' as error, name, last_name, ci, email, city, paid, registration_date  FROM user WHERE ci LIKE concat('%',_ci,'%');
+    ELSE
+		SELECT 'yes' as error, 'No se encontraron registros'as respuesta;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listDataEmail` (IN `_email` VARCHAR(85))  BEGIN
+	IF(SELECT EXISTS(SELECT * FROM user WHERE email LIKE concat('%',_email,'%')))THEN
+		SELECT 'not' as error, name, last_name, ci, email, city, paid, registration_date FROM user WHERE email LIKE concat('%',_email,'%');
+    ELSE
+		SELECT 'yes' as error, 'No se encontraron registros'as respuesta;
+    END IF;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listEvent` ()  BEGIN

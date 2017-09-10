@@ -27,6 +27,14 @@ $app->group('/user',function(){
 				   	);
 	});
 
+	$this->get('/listAdmin/{id}',function($req, $res, $args){
+		return $res->withHeader('Content-type', 'aplication/json')
+				   ->write(
+				   		json_encode($this->model->User->listAdmin($args['id']))
+				   		
+				   	);
+	});
+
 	$this->get('/material/{id}',function($req, $res, $args){
 		return $res->withHeader('Content-type', 'aplication/json')
 				   ->write(
@@ -81,6 +89,20 @@ $app->group('/user',function(){
 						   -> write(
 								json_encode($this->model->User->countUser())
 		
+							   );
+			});
+
+			$this->get('/listDataCi/{id}',function($req, $res, $args){
+				return $res->withHeader('Content-type', 'aplication/json')
+						   ->write(
+								   json_encode($this->model->User->listDataCi($args['id']))
+								   
+							   );
+			});$this->get('/listDataEmail/{id}',function($req, $res, $args){
+				return $res->withHeader('Content-type', 'aplication/json')
+						   ->write(
+								   json_encode($this->model->User->listDataEmail($args['id']))
+								   
 							   );
 			});
 
