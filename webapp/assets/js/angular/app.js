@@ -3,7 +3,6 @@ var app = angular.module('ccbolApp',
     'jcs-autoValidate',
     'ccbolApp.homeCtrl',
     'ccbolApp.registroCtrl',
-    'ccbolApp.preinscripcionCtrl',
     'ccbolApp.registroServices'
     ]
 	).run([
@@ -62,11 +61,7 @@ app.controller('mainCtrl', ['$scope','$http', function($scope,$http){
     .when('/registro', {
 		templateUrl: 'assets/js/angular/pages/registro.html',
         controller: 'registroCtrl'
-    })
-	.when('/pre-inscripcion', {
-		templateUrl: 'assets/js/angular/pages/preinscripcion.html',
-        controller: 'preinscripcionCtrl'
-	})             
+    })           
 	.otherwise({ 
 		redirectTo: '/', 
 	});
