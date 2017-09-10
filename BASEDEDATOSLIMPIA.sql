@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-09-2017 a las 01:30:07
+-- Tiempo de generación: 11-09-2017 a las 01:43:41
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -302,18 +302,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updateUser` (IN `_id_user` INT, IN 
     END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `userPaidBc` (IN `_id_user` INT, IN `_id_admin` INT, IN `_ocupacion` VARCHAR(75))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `userPaidBc` (IN `_id_user` INT, IN `_id_admin` INT)  BEGIN
 DECLARE errores INT;
 START TRANSACTION;
 IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user AND paid=0))THEN
 	IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin))THEN
 		IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
 			IF(SELECT EXISTS(SELECT * FROM student WHERE id_user=_id_user))THEN
-				UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin, ocupacion=_ocupacion WHERE id=_id_user;
+				UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
 				SELECT 'not' as error, 'Acreditación correcta' as respuesta;
 			ELSE
 				IF(SELECT EXISTS( SELECT * FROM professional WHERE id_user=_id_user))THEN
-					UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin, ocupacion=_ocupacion WHERE id=_id_user;
+					UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
 					SELECT 'not' as error, 'Acreditación correcta' as respuesta;
 				ELSE
 					SELECT 'yes' as error, 'No se encontró el registro' as respuesta; 
@@ -336,11 +336,11 @@ ELSE
     IF(SELECT EXISTS(SELECT * FROM admin WHERE id=_id_admin))THEN
 	IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
 		IF(SELECT EXISTS(SELECT * FROM student WHERE id_user=_id_user))THEN
-			UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin, ocupacion=_ocupacion WHERE id=_id_user;
+			UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
 			SELECT 'not' as error, 'Acreditación correcta' as respuesta;
 		ELSE
 			IF(SELECT EXISTS( SELECT * FROM professional WHERE id_user=_id_user))THEN
-				UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin, ocupacion=_ocupacion WHERE id=_id_user;
+				UPDATE user SET paid=1, inscription_date=LOCALTIME(), id_admin=_id_admin WHERE id=_id_user;
 				SELECT 'not' as error, 'Acreditación correcta' as respuesta;
             ELSE
 				SELECT 'yes' as error, 'No se encontró el registro' as respuesta; 
