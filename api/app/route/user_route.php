@@ -74,6 +74,14 @@ $app->group('/user',function(){
 				   		
 				   	);
 	});
+
+	$this->get('/ciBarcode/{id}',function($req, $res, $args){
+		return $res->withHeader('Content-type', 'aplication/json')
+			->write(
+				json_encode($this->model->User->ciBarcode($args['id']))						   
+					);
+	});
+	
 	
 	$this->get('/countUser/',function($req, $res, $args){
 		
@@ -104,6 +112,15 @@ $app->group('/user',function(){
 						   -> write(
 								json_encode($this->model->User->userPaidBc($req->getParsedBody()))
 		
+							   );
+			});
+
+	$this->post('/printUsersTest/',function($req, $res, $args){
+				
+				return $res->withHeader('Content-type', 'aplication/json')
+						   -> write(
+								json_encode($this->model->User->printUsersTest($req->getParsedBody()))
+				
 							   );
 			});
 

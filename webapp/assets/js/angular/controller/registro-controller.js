@@ -130,10 +130,16 @@ $scope.getDataUser = function(){
                 $scope.viewStudent = true;
                 $scope.viewProfesional = false;
                 $scope.dataUser = $scope.dataResponse;
+                console.log('student');
+                $scope.dataUser._ocupacion = $scope.dataResponse._college.toString().split('(')[1].split(')')[0];
+                
             }else{
+                console.log('profesional');
                 $scope.viewProfesional = true;
                 $scope.viewStudent = false;
+
                 $scope.dataUser = $scope.dataResponse;
+                $scope.dataUser._ocupacion = $scope.dataResponse._professional_degree;
             }
         }else{
             $scope.dataError = true;
@@ -217,6 +223,7 @@ $scope.paid = function(data){
 
     $scope.dataPaid._id_user =data._id;
     $scope.dataPaid._id_admin =$sessionStorage.data.id; 
+    $scope.dataPaid._ocupacion = $scope.dataUser._ocupacion;
     console.log($scope.dataPaid);
 
     registroServices.userPaidBc( $scope.dataPaid ).then(function(){

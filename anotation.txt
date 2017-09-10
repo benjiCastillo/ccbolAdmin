@@ -15,3 +15,4 @@ UPDATE `student` SET college=UPPER(college),career=UPPER(career) WHERE 1
 //profesional
 UPDATE `professional` SET professional_degree=UPPER(professional_degree) WHERE 1
 
+update user set printed_check = 0, printed = 0, paid = 0 where id_admin = 1 OR id_admin = 2 

@@ -81,7 +81,7 @@ class  UserModel
 		if($res[1]=="yes")
 		$res = array("message"=>$res[0], "error"=>$res[1], "response"=>true);
 		else
-		$res = array("message"=>$res[0], "id"=>$this->security->encriptar($res[2]), "error"=>$res[1], "response"=>true);
+		$res = array("message"=>$res[0], "id"=>$this->security->encriptarID($res[2]), "error"=>$res[1], "response"=>true);
 		return $res;	
 	}
 
@@ -132,7 +132,7 @@ class  UserModel
 		if($res[1]=="yes")
 			$res = array("message"=>$res[0], "error"=>$res[1], "response"=>true);
 		else
-			$res = array("message"=>$res[0], "id"=>$this->security->encriptar($res[2]), "error"=>$res[1], "response"=>true);
+			$res = array("message"=>$res[0], "id"=>$this->security->encriptarID($res[2]), "error"=>$res[1], "response"=>true);
 		return $res;
 	}
 
@@ -162,7 +162,8 @@ class  UserModel
 
 	public function userPaidBc($data){
 		$this->mysqli->multi_query(" CALL userPaidBc('".$data['_id_user']."',
-                                                    '".$data['_id_admin']."')");
+													'".$data['_id_admin']."',
+                                                    '".$data['_ocupacion']."')");
 
 		$res = $this->mysqli->store_result();
 		$res = $res->fetch_assoc();
@@ -279,6 +280,19 @@ class  UserModel
 		return $res;					 
 	}
 	
+	public function printUsersTest($data){
+		$this->mysqli->multi_query(" CALL printUsersTest('".$data['_limit']."',
+													'".$data['_id_admin1']."',
+													'".$data['_id_admin2']."')");
+		$res = $this->mysqli->store_result();
+		while($fila = $res->fetch_assoc()){
+			$arreglo[] = $fila;
+		}
+		$res = $arreglo;
+		mysqli_close($this->mysqli);
+		$res = array("message"=>$res,"response"=>true);
+		return $res;					 
+	}
 
 	public function printUpdate($data){
 		$this->mysqli->multi_query(" CALL printUpdate('".$data['_id_admin1']."',
@@ -291,7 +305,7 @@ class  UserModel
 	}
 	
 	public function printChecked($data){
-		$this->mysqli->multi_query(" CALL printChecked(".$data.")");
+		$this->mysqli->multi_query(" CALL printChecked('".$data."')");
 		$res = $this->mysqli->store_result();
 		$res = $res->fetch_assoc();
 		mysqli_close($this->mysqli);
@@ -371,6 +385,21 @@ class  UserModel
 				 ->execute();
 
 		return $this->response->setResponse(true);		 
+	}
+
+
+	public function ciBarcode($data){
+		$this->mysqli->multi_query(" CALL ciBarcode('".$data."')");
+
+		$res = $this->mysqli->store_result();
+		$res = $res->fetch_array();
+		mysqli_close($this->mysqli);
+		if($res[0]=="yes")
+			$res = array("message"=>$res[1], "error"=>$res[0], "response"=>true);
+		else
+			$res = array("id"=>$this->security->encriptarID($res[1]), "error"=>$res[0],"name"=>$res[2],"last_name"=>$res[3], "response"=>true);
+
+			return $res;	 
 	}
 
 

@@ -326,9 +326,9 @@ nav{
 /*Estilo button*/
 
 .btn-transparent-gmail{
-     background: transparent ;
-    border: 2px solid #039be5 ;
-    color:#039be5;
+    border: 2px solid #039be5;
+    background: #039be5;
+    color: white;
     text-shadow: none;
     background-image: none;
 }
@@ -545,4 +545,11 @@ nav{
     border-left-width: 0px;
     font-size: 20px;
 
+}
+
+.viewStudent, .viewProfesional{
+    font-size: 20px;
+}
+.viewStudent h3, .viewProfesional h3{
+    margin-top:0px;
 }
