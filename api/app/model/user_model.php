@@ -298,6 +298,38 @@ class  UserModel
 		return $res;				 
 	}
 
+	public function listAdmin($data){
+		$this->mysqli->multi_query(" CALL listAdmin(".$data.")");
+		$res = $this->mysqli->store_result();
+		$res = $res->fetch_assoc();
+		mysqli_close($this->mysqli);
+		return $res;				 
+	}
+
+	public function listDataCi($data){
+		$this->mysqli->multi_query(" CALL listDataCi('".$data."')");
+		$res = $this->mysqli->store_result();
+		while($fila = $res->fetch_assoc()){
+			$arreglo[] = $fila;
+		}
+		$res = $arreglo;
+		mysqli_close($this->mysqli);
+		$res = array("message"=>$res, "response"=>true);
+		return $res;	
+	}
+
+	public function listDataEmail($data){
+		$this->mysqli->multi_query(" CALL listDataEmail('".$data."')");
+		$res = $this->mysqli->store_result();
+		while($fila = $res->fetch_assoc()){
+			$arreglo[] = $fila;
+		}
+		$res = $arreglo;
+		mysqli_close($this->mysqli);
+		$res = array("message"=>$res, "response"=>true);
+		return $res;	 
+	}
+
 	public function material($data){
 		$this->mysqli->multi_query(" CALL material(".$data.")");
 		$res = $this->mysqli->store_result();
