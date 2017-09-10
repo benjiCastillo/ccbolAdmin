@@ -27,6 +27,14 @@ $app->group('/user',function(){
 				   	);
 	});
 
+	$this->get('/material/{id}',function($req, $res, $args){
+		return $res->withHeader('Content-type', 'aplication/json')
+				   ->write(
+				   		json_encode($this->model->User->material($args['id']))
+				   		
+				   	);
+	});
+
 	$this->get('/listProfessionals/',function($req, $res, $args){
 		return $res->withHeader('Content-type', 'aplication/json')
 				   ->write(
