@@ -298,6 +298,14 @@ class  UserModel
 		return $res;				 
 	}
 
+	public function material($data){
+		$this->mysqli->multi_query(" CALL material(".$data.")");
+		$res = $this->mysqli->store_result();
+		$res = $res->fetch_assoc();
+		mysqli_close($this->mysqli);
+		return $res;				 
+	}
+
 	public function listUsersPaid(){
 		$this->mysqli->multi_query(" CALL listUsersPaid()");
 			$res = $this->mysqli->store_result();
