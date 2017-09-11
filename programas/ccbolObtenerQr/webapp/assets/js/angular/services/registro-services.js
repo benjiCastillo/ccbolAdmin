@@ -22,7 +22,27 @@ var  urlServer ="localhost";
 								return d.resolve();
                         });
                        return d.promise;	 
-		}
+		},
+				guardarEst : function(datos){
+					var d = $q.defer();
+					// console.log(datos);
+                    $http({
+                      method: 'POST',
+					  	url: 'http://'+urlServer+'/ccbolAdmin/api/public/user/adminLogin/',
+ 						data: datos
+                    	})
+                        .then(function successCallback(response) {
+								// console.log(response.data);
+								self.response 	= response.data;
+								
+								return d.resolve()	
+                            }, function errorCallback(response) {
+								
+								self.response 	= response.data
+								return d.resolve();
+                        });
+                       return d.promise;	 
+		},
 				
 	}
 

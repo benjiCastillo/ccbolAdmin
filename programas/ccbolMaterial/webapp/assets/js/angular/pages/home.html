@@ -1,0 +1,53 @@
+
+<section id="port">
+        <div class="container container-port">
+            <div class="row row-port">
+
+                    <div class="col-md-6">
+                        <img src="assets/img/logo-ccbol-2017.png" alt="" class="img-port-slide">
+                        <!-- <img src="assets/img/logo-2.png" alt="" class="img-port-slide"> -->
+                        <br>
+                        <span class="titulo-ccbol">Sistema de Incripción y Acreditación - CCBOL SUCRE 2017</span>
+                    </div>
+                    <div class="col-md-6">  
+                        <div class="container-preinscripcion animated fadeInRight">
+                        <form name="frmUser"
+                        ng-submit="logInAdmin( userSel )"
+                        novalidate="novalidate" style="padding:15px;">
+                            <h3 class="tit-form-pre-ins">Login</h3>
+                            
+                            <div class="form-group">
+                                <label>Usuario </label>
+                                <input type="text" class="form-control" placeholder="Apellidos"
+                                    ng-model="userSel._count" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="text" class="form-control" placeholder="CI"
+                                    ng-model="userSel._password" ng-maxlength="13" required>
+                            </div>
+
+
+                    
+
+                            <div class="form-group">
+                                <button type="submit" id="btn-send" ng-class="classTop" class="btn btn-center btn-transparent-gmail"> Ingresar</button>
+                            </div>
+
+                            <p>{{  dataResponse.respuesta }}</p>
+                            
+                            </div>
+
+                        </form> 
+                        </div>
+                  
+                    </div>
+            </div>
+        </div>
+</section>
+
+
+
+
+

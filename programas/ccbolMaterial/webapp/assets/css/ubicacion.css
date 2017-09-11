@@ -1,0 +1,109 @@
+.card{
+    position: relative;
+    margin: .5rem 0 1rem 0;
+    background-color: #fff;
+    -webkit-transition: -webkit-box-shadow .25s;
+    transition: -webkit-box-shadow .25s;
+    transition: box-shadow .25s;
+    transition: box-shadow .25s, -webkit-box-shadow .25s;
+    border-radius: 2px;
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+}
+.card .card-image {
+    position: relative;
+}
+.card .card-image img {
+    display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+.card .card-content {
+    padding: 15px;
+    border-radius: 0 0 2px 2px;
+}
+.card .card-content p{
+    margin: 0;
+}
+.card .card-image .card-title {
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+    padding: 24px;
+    text-shadow: 2px 2px 1px #2d2d2d;
+}
+.card .card-title {
+    font-size: 24px;
+    font-weight: 300;
+}
+.card .card-action:last-child {
+    border-radius: 0 0 2px 2px;
+}
+.card .card-action {
+    position: relative;
+    background-color: inherit;
+    border-top: 1px solid rgba(160,160,160,0.2);
+    padding: 16px 24px;
+}
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {
+    color: #ffab40;
+    margin-right: 24px;
+    -webkit-transition: color .3s ease;
+    transition: color .3s ease;
+    text-transform: uppercase;
+}
+
+
+.titulo-ubicacion{
+    font-size: 45px;
+    margin-bottom: 0px;
+    color:#039be5;
+}
+
+#map{
+    height:50vh; 
+    width:100%;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+
+ .btn-block-maps{
+    width: 100% !important;
+    min-width: 100% !important;
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+ }   
+@media (max-width:767px) {
+.map{
+    width: 100% !important;
+}
+
+}
+
+
+@media only screen and (max-width : 992px){
+    .titulo-ubicacion{
+        font-size: 30px;
+    }
+}
+
+
+ @media only screen and (max-width : 1200px) {
+
+}
+
+@media only screen and (max-width : 768px) {
+
+}
+@media only screen and (max-width : 480px) {
+    /*.img-sistemas-slide{
+        margin-top: 28%;
+    }*/
+ }
