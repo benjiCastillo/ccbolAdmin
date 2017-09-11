@@ -323,7 +323,7 @@ class  UserModel
 		$this->mysqli->multi_query(" CALL listDataCi('".$data."')");
 		$res = $this->mysqli->store_result();
 		while($fila = $res->fetch_assoc()){
-			if($fila['id']){
+			if(isset($fila['id'])){
 				$fila['id']=$this->security->encriptarID($fila['id']);
 				$arreglo[] = $fila;
 			}else{
@@ -340,7 +340,7 @@ class  UserModel
 		$this->mysqli->multi_query(" CALL listDataEmail('".$data."')");
 		$res = $this->mysqli->store_result();
 		while($fila = $res->fetch_assoc()){
-			if($fila['id']){
+			if(isset($fila['id'])){
 				$fila['id']=$this->security->encriptarID($fila['id']);
 				$arreglo[] = $fila;
 			}else{
@@ -350,7 +350,7 @@ class  UserModel
 		$res = $arreglo;
 		mysqli_close($this->mysqli);
 		$res = array("message"=>$res, "response"=>true);
-		return $res;	 
+		return $res;	
 	}
 
 	public function material($data){
