@@ -106,7 +106,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listDataCi` (IN `_ci` VARCHAR(13))  BEGIN
 	IF(SELECT EXISTS(SELECT * FROM user WHERE ci LIKE concat('%',_ci,'%')))THEN
-		SELECT 'not' as error, name, last_name, ci, email, city, paid, registration_date  FROM user WHERE ci LIKE concat('%',_ci,'%');
+		SELECT 'not' as error, id, name, last_name, ci, email, city, paid, registration_date  FROM user WHERE ci LIKE concat('%',_ci,'%');
     ELSE
 		SELECT 'yes' as error, 'No se encontraron registros'as respuesta;
     END IF;
@@ -114,7 +114,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `listDataEmail` (IN `_email` VARCHAR(85))  BEGIN
 	IF(SELECT EXISTS(SELECT * FROM user WHERE email LIKE concat('%',_email,'%')))THEN
-		SELECT 'not' as error, name, last_name, ci, email, city, paid, registration_date FROM user WHERE email LIKE concat('%',_email,'%');
+		SELECT 'not' as error, id, name, last_name, ci, email, city, paid, registration_date FROM user WHERE email LIKE concat('%',_email,'%');
     ELSE
 		SELECT 'yes' as error, 'No se encontraron registros'as respuesta;
     END IF;
