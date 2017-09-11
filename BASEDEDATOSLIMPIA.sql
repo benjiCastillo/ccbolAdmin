@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-09-2017 a las 03:55:53
+-- Tiempo de generación: 11-09-2017 a las 04:46:05
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -164,7 +164,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `material` (IN `_id_user` INT)  BEGIN
 	IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
-		IF(SELECT EXISTS(SELECT * FROM user WHERE printed_check=0 AND id=_id_user))THEN
+		IF(SELECT EXISTS(SELECT * FROM user WHERE mateial=0 AND id=_id_user))THEN
 			UPDATE user SET material = 1 WHERE id = _id_user;
 			SELECT 'not' as error, 'Material entregado!' as respuesta;
 		ELSE
