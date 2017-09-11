@@ -1,0 +1,44 @@
+		/* ---- stats.js ---- */
+.count-particles {
+  position: absolute;
+  left: 0;
+  color: #13E8E9;
+  font-size: .8em;
+  text-align: left;
+  text-indent: 4px;
+  line-height: 14px;
+  padding-bottom: 2px;
+  font-weight: bold; }
+
+.js-count-particles {
+  font-size: 1.1em; }
+
+.count-particles {
+  -webkit-user-select: none; }
+
+.count-particles {
+  border-radius: 0 0 3px 3px;
+  width: 100vw !important;
+  height: 120vh; }
+
+/* ---- particles.js container ---- */
+#particles-js {
+  width: 100%;
+  height: 100%;
+  background-image: url("");
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat; }
+
+.bg-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position-x: 50%;
+  background-position-y: 20%;
+  background-size: 120vw;
+  height: 100%;
+  width: 100%;
+  transition: all .5s;
+  position: fixed;
+  z-index:0;
+   }

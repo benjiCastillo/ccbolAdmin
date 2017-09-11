@@ -1,0 +1,70 @@
+<nav>
+    <section class="nav-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2 navigation-col__logo">
+                    <div class="logo__wrapper-table">
+                        <div class="logo__wrapper-cell">
+                            <a href="#">
+                                <img class="logo__image" src="assets/img/logo-ccbol-2017.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-10 navigation-col__links hidden-xs hidden-sm">
+                    <ul>
+                        <li><a  ng-click="logOut()">Salir</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-offset-10 col-xs-2 visible-xs visible-sm">
+                    <span id="icon-menu"></span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section id="menu-xs-sm" class=" visible-xs visible-sm" data-active='false'>
+        <div class="menu">
+            <ul class="menu-items">
+                <li class="menu-item"><a ng-click="logOut()">Salir</a></li>
+        </div>
+    </section>
+</nav>
+
+<section class="container" ng-show="!successAccess">
+    <div class="row">
+        <h1 class="text-center">No tienes Autorizacion para esta aqui!</h1>
+    </div>
+</section>
+<section class="container" ng-show="successAccess"> 
+    <div class="row">
+        <h1>Generar Barcode</h1>
+        
+                    <div class="col-md-offset-4 col-md-4">  
+                        <div class="container-preinscripcion animated fadeInRight">
+                        <form name="frmUser"
+                        ng-submit="generar( userSel, frmUser)"
+                        novalidate="novalidate" style="padding:15px;">
+                            <h3 class="tit-form-pre-ins">Generar Barcode</h3>
+                            
+                            <div class="form-group">
+                                <label>Ci </label>
+                                <input type="text" class="form-control" placeholder="Apellidos"
+                                    ng-model="userSel._ci" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" id="btn-send" ng-class="classTop" class="btn btn-center btn-transparent-gmail">Buscar</button>
+                            </div>
+
+                            <p>{{  dataResponse.message }}</p>
+                                    <p> {{ dataResponse.name }} {{ dataResponse.last_name }} </p>
+                            <a   ng-href="http://localhost/ccbolQR/ticket.php?n={{ rName }}&c={{ rId }}&l={{ rLastName }}"  ng-show="verButton" target="_blank" id="btn-send" class="btn btn-center hidden-xs btn-transparent-gmail btn-block-maps">Imprimir barcode</a>
+                            </div>
+
+                        </form> 
+                        </div>
+                  
+                    </div>
+    </div>
+</section>
+

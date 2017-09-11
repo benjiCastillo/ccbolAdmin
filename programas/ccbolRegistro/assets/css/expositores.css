@@ -1,0 +1,46 @@
+.img-expositor{
+    margin: 0 auto;
+}
+.nombreExpositor{
+    text-align: center;
+}
+.svg-linkedin{
+    background-image: url('../img/linkedin.svg');
+    background-position: center;
+	background-size:cover; 
+	background-repeat: no-repeat;
+    height: 20px;
+    position: absolute;
+    width: 20px;
+}
+.svg-web{
+    background-image: url('../img/sphere.svg');
+    background-position: center;
+	background-size:cover; 
+	background-repeat: no-repeat;
+    height: 20px;
+    position: absolute;
+    width: 20px;
+}
+.svg-gmail{
+    background-image: url('../img/gmail.svg');
+    background-position: center;
+	background-size:cover; 
+	background-repeat: no-repeat;
+    height: 20px;
+    position: absolute;
+    width: 20px;  
+}
+.svg-facebook{
+    background-image: url('../img/facebook.svg');
+    background-position: center;
+	background-size:cover; 
+	background-repeat: no-repeat;
+    height: 20px;
+    position: absolute;
+    width: 20px;  
+}
+.link-social{
+    margin-left: 28px;
+    cursor: pointer;
+}

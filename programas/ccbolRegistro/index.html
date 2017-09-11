@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="ccbolApp" ng-controller="mainCtrl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Congreso Nacional de Ciencias de la Computación, CCBOL - SUCRE 2017">
+    <meta name="Keywords" content="CCBOL, SUCRE, 2017, hackathon sucre, ccbol 2017">
+    <meta name="robots" content="index,follow" />
+
+    <!-- OpenGraph metadata-->
+    <meta property="og:locale" content="es_LA" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CCBOL - SUCRE 2017" />
+    <meta property="og:description" content="Aplicacion para administrar registro de CCBOL 2017" />
+    <meta property="og:url" content="http://ccbol2017.usfx.bo" />
+    <meta property="og:site_name" content="ccbol2017.usfx.bo" />
+    <meta property="og:image" content="assets/img/facebook.jpg" />
+    <meta property='fb:admins' content='FB-AppID'/>
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:description" content="Aplicacion para administrar registro de CCBOL 2017"/>
+    <meta name="twitter:title" content="CCBOL - SUCRE 2017"/>
+    <meta name="twitter:site" content="@ccbol2017.usfx.bo"/>
+    <meta name="twitter:creator" content="@CCBOL-SUCRE 2017"/>
+    <meta name="theme-color" content="#039be5">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <!--favicon-->
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon//apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/img/favicon/manifest.json">
+    <meta name="msapplication-TileImage" content="assets/img/favicon/ms-icon-144x144.png">
+    <title>ADMIN | CCBOL - SUCRE 2017</title>
+    <!--css style-->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/aos.css">
+    <!-- angular -->
+    <script src="assets/js/angular/angular.min.js"></script>
+    <script src="assets/js/angular/angular-route.min.js"></script>
+
+    <script src="assets/js/angular/app.js"></script>
+    <!--controller-->
+    <script src="assets/js/angular/controller/preinscripcion-controller.js"></script>
+    <!-- preinscripcion service -->
+    <script src="assets/js/angular/services/preinscripcion-services.js"></script>
+
+
+</head>
+<body>
+   
+
+
+
+<section id="main-container">
+<!--particulas-->
+    <div class="bg-image">
+        <div class="count-particles">
+            <div id="particles-js">
+
+            </div>
+        </div>
+    </div> 
+
+        <section id="view-render"  ng-cloak  ng-view>
+            
+        </section>
+
+</section>
+
+
+
+    
+<script src="assets/js/jquery-3.2.1.slim.min.js"></script>   
+<script src="assets/js/bootstrap.min.js"></script> 
+<script src="assets/js/aos.js"></script>   
+<script src="assets/js/app.js"></script>
+<script src="assets/js/jcs-auto-validate.js"></script>
+
+
+
+<!-- tabs bootstrap -->
+
+<script src="assets/js/tabs.js"></script>
+<script>
+AOS.init({
+});
+//AOS.refresh();
+</script>
+
+
+</body>
+
+</html>

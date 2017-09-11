@@ -1,0 +1,101 @@
+<div class="container">
+      <h2 class="titulo-preinscripcion" style="margin: 0;" data-aos='fade-up'>Inscripción Ccbol 2017</h2>
+    <div class="col-md-offset-2 col-md-6 col-form">
+      <div class="container-preinscripcion animated fadeInRight">
+      <form name="frmUser"
+      ng-submit="guardar( userSel,type,frmUser )"
+      novalidate="novalidate" style="padding:15px;">
+           <h3 class="tit-form-pre-ins">Formulario de inscripción</h3>
+        <div>
+
+          <div class="form-group">
+            <label>Nombres </label>
+            <input type="text" class="form-control" placeholder="Nombres"
+                ng-model="userSel._name" required>
+          </div>
+
+          <div class="form-group">
+            <label>Apellidos </label>
+            <input type="text" class="form-control" placeholder="Apellidos"
+                ng-model="userSel._last_name" required>
+          </div>
+
+          <div class="form-group">
+            <label>CI</label>
+            <input type="text" class="form-control" placeholder="CI"
+                ng-model="userSel._ci" ng-maxlength="13" required>
+          </div>
+
+          <div class="form-group">
+            <label>Correo</label>
+            <input type="email" class="form-control" placeholder="ejemplo@algo.algo"
+                ng-model="userSel._email" required>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-8">
+                  <label>Ciudad </label>
+                  <input type="text" name="city" id="city" ng-model="userSel._city" ng-keyup="completeCity(userSel._city)" class="form-control" placeholder="Ciudad" autocomplete="off" required />
+                  <ul class="list-group margin-top-0" ng-model="hidethis" ng-hide="hidethis">
+                      <li class="list-group-item select2" ng-repeat="citydata in filterCity" ng-click="fillTextboxCity(citydata)">{{citydata}}</li>
+                  </ul>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="radio" id="est" ng-model="type" value="vest">
+            <label for="est"> Estudiante </label> 
+            <input type="radio" id="prof" ng-model="type" value="vprof">
+            <label for="prof"> Profesional </label>
+          </div>
+
+          <div ng-show="type == 'vest' ">
+            <div class="form-group row animated flipInX">
+              <div class="col-sm-8">
+                    <label>Universidad </label>
+                    <input type="text" name="college" id="college" ng-model="userSel._college" ng-keyup="completeCollege(userSel._college)" class="form-control" placeholder="Universidad"/>
+                    <ul class="list-group margin-top-0" ng-model="hidethisCollege" ng-hide="hidethisCollege">
+                        <li class="list-group-item select2" ng-repeat="collegeData in filterCollege" ng-click="fillTextboxCollege(collegeData)">{{collegeData}}</li>
+                    </ul>
+              </div>
+            </div>
+
+            <div class="form-group row animated flipInX">
+              <div class="col-sm-8">
+                    <label>Carrera </label>
+                    <input type="text" name="carrera" id="carrera" ng-model="userSel._career" ng-keyup="completeCareer(userSel._career)" class="form-control" placeholder="Carrera"/>
+                    <ul class="list-group margin-top-0" ng-model="hidethisCareer" ng-hide="hidethisCareer">
+                        <li class="list-group-item select2" ng-repeat="careerData in filterCareer" ng-click="fillTextboxCareer(careerData)">{{careerData}}</li>
+                    </ul>
+              </div>
+            </div>
+          </div>
+
+          <div ng-show="type == 'vprof' ">
+            <div class="form-group animated flipInX">
+              <label>Profesión </label>
+              <input type="text" class="form-control" placeholder="Profesión"
+                  ng-model="userSel._professional_degree">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" id="btn-send" ng-class="classTop" class="btn btn-center btn-transparent-gmail">
+              Registrar
+            </button>
+          </div>  
+          <p>{{  dataResponse.message }}</p>
+          <a   ng-href="http://localhost/ccbolQR/ticket.php?n={{ rName }}&c={{ qrData.id }}&l={{ rApellido }}"  ng-show="verButton" target="_blank" id="btn-send" class="btn btn-center hidden-xs btn-transparent-gmail btn-block-maps">Imprimir barcode</a>
+        </div>
+
+      </form> 
+      </div>
+
+    </div>
+  </div> 
+
+        <br><br>
+        <footer>
+            <center><span>CCBOL SUCRE 2017</span></center>
+        </footer>
+        <br><br>

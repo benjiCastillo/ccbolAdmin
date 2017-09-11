@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+		<h2 class="titulo-ubicacion">Preinscripción</h2>
+		<p ng-show="!successPreIns">Necesita llenar el formulario de Preinscripción.</p>		
+		<div class="col-md-offset-4 col-md-4 col-xs-12 col-success-qr" ng-show="successPreIns">
+			<section class="container-success-qr">
+				<h3 class="text-center text-succes-pre-inscripcion animated tada"> <b>FELICIDADES !</b> su pre-inscripción fue exitosa.</h3>			
+				<h2 class="animated fadeIn">Importante</h2>
+				<p class="animated fadeIn">El costo de inscripción es de 300Bs. que se deberá cancelar en la facultad de <a href="./ubicacion" target="_blank">Tecnología</a> USFX el día 11 de septiembre, previa presentación de su código de barras generado.  </p>
+				<!-- <div id="qrcode"  class="img-responsive qrcode animated bounceIn"></div> -->
+				<img class="img-responsive qrcode animated bounceIn" id="barcode1"/>
+				   <a  ng-href="http://192.168.100.13/ccbolQr/ticket.php?n={{ userSel._name}}&c={{ qrData.id }}" target="_blank" id="btn-send" class="btn btn-center hidden-xs btn-transparent-gmail btn-block-maps">Imprimir barcode</a>
+				<a  ng-href="http://grupo-ciencia.com/ccbolBarcode/ticket.php?c={{ qrData.id }}" target="_blank" id="btn-send" class="btn btn-center visible-xs btn-transparent-gmail btn-block-maps">Descargar barcode</a>	     
+				<p  class="animated fadeInLeft">Únete al grupo oficial de Whatsapp <a  target="_blank"  href="https://chat.whatsapp.com/HcPtHvEvRJH806cTqIfHm6">Unirse</a></p>
+				<p  class="animated fadeInLeft">Únete al grupo oficial de Telegram <a  target="_blank"  href="https://t.me/joinchat/EXr_uA3bMQYBq_FZ3v364g">Unirse</a></p>
+			</section>	
+		</div>
+		
+	</div>	
+</div>
+        <br><br>
+        <footer>
+            <center><span>CCBOL SUCRE 2017</span></center>
+        </footer>
+        <br><br>	
