@@ -121,7 +121,26 @@ var  urlServer ="localhost";
 								return d.resolve();
                         });
                        return d.promise;	 
-		}																	
+		},
+		listAdmin : function(datos){
+					var d = $q.defer();
+					// console.log(datos);
+                    $http({
+                      method: 'GET',
+					  	url: 'http://'+urlServer+'/ccbolAdmin/api/public/user/listAdmin/'+datos
+                    	})
+                        .then(function successCallback(response) {
+								// console.log(response.data);
+								self.response 	= response.data;
+								
+								return d.resolve()	
+                            }, function errorCallback(response) {
+								
+								self.response 	= response.data
+								return d.resolve();
+                        });
+                       return d.promise;	 
+		}																							
 
 	}
 

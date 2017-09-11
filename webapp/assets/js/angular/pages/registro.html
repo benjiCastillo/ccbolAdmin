@@ -68,7 +68,7 @@
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditStudent(dataUser)"> Editar Datos</button>
                 <button class="btn btn-transparent-gmail btn-paid" ng-show="paidSuccess"  ng-click="paid(dataUser)"> Registrar Pago </button>
                 <h3 ng-show="!paidSuccess">La persona fue correctamente acreditada</h3>
-                <p ng-show="!paidSuccess"><a   ng-href="http://localhost/ccbolQR/recibo.php?name={{ dataUser._name }}%20{{ dataUser._last_name }}&userid={{ dataUser._id}}&price=300&caja=cajero-1"  target="_blank" id="btn-send" class="btn btn-center hidden-xs btn-transparent-gmail btn-block-maps">Imprimir Recibo</a></p>
+                <p ng-show="!paidSuccess"><a   ng-href="http://localhost/ccbolQR/recibo.php?name={{ dataUser._name }}%20{{ dataUser._last_name }}&userid={{ dataUser._id}}&price=300&caja={{ cajero.name }}%20{{ cajero.last_name }}&ci={{ dataUser._ci }}"  target="_blank" id="btn-send" class="btn btn-center hidden-xs btn-transparent-gmail btn-block-maps">Imprimir Recibo</a></p>
             </section>   
             <section  class="viewProfesional" ng-show="viewProfesional">
                 <h3>Datos Personales</h3>
@@ -81,7 +81,7 @@
                 <button class="btn btn-transparent-gmail btn-update" ng-click="showModalEditProfesional(dataUser)"> Editar Datos</button>
                 <button class="btn btn-transparent-gmail btn-paid" ng-show="paidSuccess" ng-click="paid(dataUser)"> Registrar Pago </button>
                 <h3 ng-show="!paidSuccess">La persona fue correctamente acreditada</h3>
-                <p ng-show="!paidSuccess"><a   ng-href="http://localhost/ccbolQR/recibo.php?name={{ dataUser._name }}%20{{ dataUser._last_name }}&userid={{ dataUser._id}}&price=300&caja=cajero-1"  target="_blank" id="btn-send" class="btn btn-center hidden-xs btn-transparent-gmail btn-block-maps">Imprimir Recibo</a></p>
+                <p ng-show="!paidSuccess"><a   ng-href="http://localhost/ccbolQR/recibo.php?name={{ dataUser._name }}%20{{ dataUser._last_name }}&userid={{ dataUser._id}}&price=300&caja={{ cajero.name }}%20{{ cajero.last_name }}&ci={{ dataUser._ci }}"  target="_blank" id="btn-send" class="btn btn-center hidden-xs btn-transparent-gmail btn-block-maps">Imprimir Recibo</a></p>
             </section>    
 
         </div>
