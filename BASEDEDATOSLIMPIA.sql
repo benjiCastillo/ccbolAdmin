@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-09-2017 a las 04:46:05
+-- Tiempo de generación: 11-09-2017 a las 05:09:37
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 7.0.8
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `ccbol_db`
+-- Base de datos: `ccbol_buena`
 --
 
 DELIMITER $$
@@ -164,7 +164,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `material` (IN `_id_user` INT)  BEGIN
 	IF(SELECT EXISTS(SELECT * FROM user WHERE id=_id_user))THEN
-		IF(SELECT EXISTS(SELECT * FROM user WHERE mateial=0 AND id=_id_user))THEN
+		IF(SELECT EXISTS(SELECT * FROM user WHERE material=0 AND id=_id_user))THEN
 			UPDATE user SET material = 1 WHERE id = _id_user;
 			SELECT 'not' as error, 'Material entregado!' as respuesta;
 		ELSE
