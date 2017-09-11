@@ -323,11 +323,16 @@ class  UserModel
 		$this->mysqli->multi_query(" CALL listDataCi('".$data."')");
 		$res = $this->mysqli->store_result();
 		while($fila = $res->fetch_assoc()){
-			$arreglo[] = $fila;
+			if($fila['id']){
+				$fila['id']=$this->security->encriptarID($fila['id']);
+				$arreglo[] = $fila;
+			}else{
+				$arreglo[] = $fila;
+			}
 		}
 		$res = $arreglo;
 		mysqli_close($this->mysqli);
-		$res = array("message"=>$res, "response"=>true);
+		$res = array("message"=>$res,"response"=>true);
 		return $res;	
 	}
 
@@ -335,7 +340,12 @@ class  UserModel
 		$this->mysqli->multi_query(" CALL listDataEmail('".$data."')");
 		$res = $this->mysqli->store_result();
 		while($fila = $res->fetch_assoc()){
-			$arreglo[] = $fila;
+			if($fila['id']){
+				$fila['id']=$this->security->encriptarID($fila['id']);
+				$arreglo[] = $fila;
+			}else{
+				$arreglo[] = $fila;
+			}
 		}
 		$res = $arreglo;
 		mysqli_close($this->mysqli);

@@ -92,13 +92,15 @@ $app->group('/user',function(){
 							   );
 			});
 
-			$this->get('/listDataCi/{id}',function($req, $res, $args){
+	$this->get('/listDataCi/{id}',function($req, $res, $args){
 				return $res->withHeader('Content-type', 'aplication/json')
 						   ->write(
 								   json_encode($this->model->User->listDataCi($args['id']))
 								   
 							   );
-			});$this->get('/listDataEmail/{id}',function($req, $res, $args){
+			});
+	
+	$this->get('/listDataEmail/{id}',function($req, $res, $args){
 				return $res->withHeader('Content-type', 'aplication/json')
 						   ->write(
 								   json_encode($this->model->User->listDataEmail($args['id']))
